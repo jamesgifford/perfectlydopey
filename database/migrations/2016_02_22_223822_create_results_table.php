@@ -14,7 +14,10 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('year')->unsigned();
             $table->string('full_name', 50);
+            $table->string('first_name', 50);
+            $table->string('last_name', 50);
             $table->integer('age')->unsigned();
             $table->string('gender', 2);
             $table->string('5k', 10);
@@ -22,6 +25,9 @@ class CreateResultsTable extends Migration
             $table->string('half', 10);
             $table->string('full', 10);
             $table->string('location', 50);
+            $table->string('city', 50);
+            $table->string('state', 50);
+            $table->string('country', 50);
             $table->timestamps();
         });
     }
