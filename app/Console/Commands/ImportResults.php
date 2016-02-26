@@ -101,6 +101,16 @@ class ImportResults extends Command
             $result->state = $state;
             $result->country = $country;
 
+            // Look for whether the this runner's data already exists for a prior year
+            $existingRunner = Result::isExistingRunner($result);
+
+            if ($existingRunner) {
+                $result->runner_id = $existingRunner->runner_id;
+            }
+            else {
+                $result->runner_id = Result::nextRunnerID();
+            }
+
             try {
                 $result->save();
                 $insertCount++;
