@@ -30,6 +30,7 @@ class CreateResultsTable extends Migration
             $table->string('state', 50);
             $table->string('country', 50);
             $table->timestamps();
+            $table->unique(['year', 'full_name', 'age', '5k_time', 'location']);
         });
     }
 
