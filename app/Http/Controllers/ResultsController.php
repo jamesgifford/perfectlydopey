@@ -13,12 +13,6 @@ class ResultsController extends Controller
 {
     public function index()
     {
-        $result = Result::find(1);
-
-        Result::nextRunnerID();
-        \DB::connection()->enableQueryLog();
-        $test = Result::isExistingRunner($result);
-
-        print_r($test);
+        
     }
 }
