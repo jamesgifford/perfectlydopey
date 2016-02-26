@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {
     protected $table = 'results';
+    
     protected $fillable = [
-        'full_name', 'age', 'gender', '5k', '10k', 'half', 'full', 'location'
+        'runner_id', 'year', 'full_name', 'first_name', 'last_name', 'age', 'gender', '5k_time', '10k_time', 'half_time', 'full_time', 'location', 'city', 'state', 'country'
     ];
 }
