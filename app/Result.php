@@ -56,4 +56,19 @@ class Result extends Model
 
         return $query != null;
     }
+
+    /**
+     * 
+     */
+    public static function getPerfect()
+    {
+        $query = \DB::select('
+            SELECT COUNT(*)
+            FROM results
+            GROUP BY runner_id 
+            HAVING COUNT(*) = 3
+        ');
+
+        return count($query);
+    }
 }

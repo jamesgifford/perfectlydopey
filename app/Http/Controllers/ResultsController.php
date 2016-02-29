@@ -13,6 +13,9 @@ class ResultsController extends Controller
 {
     public function index()
     {
-        
+        // TODO: get data for perfect dopeys and pass it to view in way that works with chart.js
+        $perfects = Result::getPerfect();
+
+        print_r($perfects);
     }
 }
