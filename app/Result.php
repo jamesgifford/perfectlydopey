@@ -58,17 +58,33 @@ class Result extends Model
     }
 
     /**
-     * 
+     * Get all Perfect Dopeys
+     * @return  array
      */
-    public static function getPerfect()
+    public static function getPerfects()
     {
         $query = \DB::select('
-            SELECT COUNT(*)
+            SELECT *
             FROM results
             GROUP BY runner_id 
             HAVING COUNT(*) = 3
         ');
 
-        return count($query);
+        return $query;
+    }
+
+    /**
+     * Get the total number of participants by year
+     * @return  array
+     */
+    public static function getTotalsByYear()
+    {
+        $query = \DB::select("
+            SELECT year, COUNT(*) 
+            FROM results 
+            GROUP BY year
+        ");
+
+        return $query;
     }
 }
