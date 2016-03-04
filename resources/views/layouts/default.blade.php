@@ -328,7 +328,7 @@
             });
 
             (function () {
-                var context = $('#results1').getContext('2d');
+                var context = document.getElementById('results1').getContext('2d');
                 var chart = {
                     labels: {{ json_encode($years) }},
                     datasets: [
