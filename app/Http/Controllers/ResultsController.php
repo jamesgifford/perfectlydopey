@@ -13,14 +13,15 @@ class ResultsController extends Controller
 {
     public function index()
     {
-        // TODO: get data for perfect dopeys and pass it to view in way that works with chart.js
-        $perfects = Result::getPerfects();
-        $totalsByYear = Result::getTotalsByYear();
-        //$all = Result::all();
+        // TODO: Put these values in a config somewhere
+        $firstYear = 2014;
+        $lastYear = 2016;
 
-        //print_r($all->lists('year'));
-        //exit();
+        for ($i = $firstYear; $i <= $lastYear; $i++) {
+            $perfects[$i] = Result::getPerfectsByYear($i);
+            $perfectCounts[$i] = count($perfects[$i]);
+        }
 
-        return view('results.index')->with('years', [2014, 2015, 2016])->with('totals', [6145, 6245, 6687]);
+        return view('results.index')->with('years', array_keys($perfects))->with('totals', array_values($perfectCounts));
     }
 }

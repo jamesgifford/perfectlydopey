@@ -87,4 +87,29 @@ class Result extends Model
 
         return $query;
     }
+
+    /**
+     * Get data for Perfect Dopeys for a specific year
+     * @param   int     the year in question
+     */
+    public static function getPerfectsByYear($year = 2014)
+    {
+        // TODO: reference config value for firstYear here
+
+        if ($year < 2014) {
+            return false;
+        }
+
+        $sql = "
+            SELECT runner_id, COUNT(*) 
+            FROM results 
+            WHERE year <= $year
+            GROUP BY runner_id 
+            HAVING COUNT(*) = ($year - 2013)
+        ";
+
+        $query = \DB::select($sql);
+
+        return $query;
+    }
 }

@@ -345,9 +345,9 @@
                     bezierCurve: false, 
                     scaleBeginAtZero : true, 
                     scaleOverride: true, 
-                    scaleStartValue: 5000, 
+                    scaleStartValue: 0, 
                     scaleStepWidth: 1000, 
-                    scaleSteps: 5 
+                    scaleSteps: 7 
                 });
 
                 $('.data-wrap').bxSlider({
