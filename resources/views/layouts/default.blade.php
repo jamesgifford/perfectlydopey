@@ -120,9 +120,11 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <h3>Count By Gender</h3>
+                                <canvas id="results2" height="300" width="300"></canvas>
                             </div>
                             <div class="col-md-4">
                                 <h3>Count By Age</h3>
+                                <canvas id="results3" height="300" width="300"></canvas>
                             </div>
                             <div class="col-md-4">
                                 <h3>Count By Location</h3>
@@ -328,26 +330,61 @@
             });
 
             (function () {
-                var context = document.getElementById('results1').getContext('2d');
-                var chart = {
-                    labels: {{ json_encode($years) }},
+                var context1 = document.getElementById('results1').getContext('2d');
+                var context2 = document.getElementById('results2').getContext('2d');
+                var context3 = document.getElementById('results3').getContext('2d');
+
+                var chartPerfectsByYear = {
+                    labels: {{ json_encode($perfectsByYear['year']) }},
                     datasets: [
                         {
-                            data: {{ json_encode($totals) }}
+                            data: {{ json_encode($perfectsByYear['count']) }}
                         }
                     ]
-                }
+                };
+                var chartPerfectsByGender = {
+                    labels: {!! json_encode($perfectsByGender['gender']) !!},
+                    datasets: [
+                        {
+                            data: {{ json_encode($perfectsByGender['count']) }}
+                        }
+                    ]
+                };
+                var chartPerfectsByAge = {
+                    labels: {{ json_encode($perfectsByAge['age']) }},
+                    datasets: [
+                        {
+                            data: {{ json_encode($perfectsByAge['count']) }}
+                        }
+                    ]
+                };
 
                 Chart.defaults.global.responsive = true;
                 Chart.defaults.global.maintainAspectRatio = false;
 
-                new Chart(context).Bar(chart, { 
+                new Chart(context1).Bar(chartPerfectsByYear, { 
                     bezierCurve: false, 
                     scaleBeginAtZero : true, 
                     scaleOverride: true, 
                     scaleStartValue: 0, 
                     scaleStepWidth: 1000, 
                     scaleSteps: 7 
+                });
+                new Chart(context2).Bar(chartPerfectsByGender, { 
+                    bezierCurve: false, 
+                    scaleBeginAtZero : true, 
+                    scaleOverride: true, 
+                    scaleStartValue: 0, 
+                    scaleStepWidth: 100, 
+                    scaleSteps: 6 
+                });
+                new Chart(context3).Line(chartPerfectsByAge, { 
+                    bezierCurve: true, 
+                    scaleBeginAtZero : true, 
+                    scaleOverride: true, 
+                    scaleStartValue: 0, 
+                    scaleStepWidth: 1, 
+                    scaleSteps: 60 
                 });
 
                 $('.data-wrap').bxSlider({

@@ -22,6 +22,31 @@ class ResultsController extends Controller
             $perfectCounts[$i] = count($perfects[$i]);
         }
 
-        return view('results.index')->with('years', array_keys($perfects))->with('totals', array_values($perfectCounts));
+        $result = Result::countPerfectsByGender();
+        foreach ($result as $row) {
+            $perfectsByGender[$row->gender] = $row->count;
+        }
+
+        $result = Result::countPerfectsByAge();
+        foreach ($result as $row) {
+            $perfectsByAge[$row->age] = $row->count;
+        }
+
+        $data = [
+            'perfectsByYear' => [
+                'year' => array_keys($perfects),
+                'count' => array_values($perfectCounts),
+            ],
+            'perfectsByGender' => [
+                'gender' => array_keys($perfectsByGender),
+                'count' => array_values($perfectsByGender),
+            ],
+            'perfectsByAge' => [
+                'age' => array_keys($perfectsByAge),
+                'count' => array_values($perfectsByAge),
+            ],
+        ];
+
+        return view('results.index', $data);
     }
 }

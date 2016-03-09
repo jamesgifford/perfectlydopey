@@ -95,6 +95,7 @@ class Result extends Model
     public static function getPerfectsByYear($year = 2014)
     {
         // TODO: reference config value for firstYear here
+        // TODO: default to current year
 
         if ($year < 2014) {
             return false;
@@ -108,6 +109,62 @@ class Result extends Model
             WHERE year <= $year 
             GROUP BY runner_id 
             HAVING COUNT(runner_id) = ($year - 2013)) r2 ON r2.id = r1.id
+        ";
+
+        $query = \DB::select($sql);
+
+        return $query;
+    }
+
+    /**
+     * Get the count of Perfect Dopeys grouped by age
+     */
+    public static function countPerfectsByAge($year = null)
+    {
+        // TODO: reference config values for years here
+
+        if ($year == null || $year < 2014) {
+            $year = 2016;
+        }
+
+        $sql = "
+            SELECT age, COUNT(*) AS count
+            FROM results 
+            WHERE id IN (SELECT MAX(id) AS id 
+                FROM results 
+                WHERE year <= $year 
+                GROUP BY runner_id 
+                HAVING COUNT(runner_id) = ($year - 2013)) 
+            GROUP BY age 
+            ORDER BY age ASC
+        ";
+
+        $query = \DB::select($sql);
+
+        return $query;
+    }
+
+    /**
+     * Get the count of Perfect Dopeys grouped by gender
+     */
+    public static function countPerfectsByGender($year = null)
+    {
+        // TODO: reference config values for years here
+
+        if ($year == null || $year < 2014) {
+            $year = 2016;
+        }
+
+        $sql = "
+            SELECT gender, COUNT(*) AS count
+            FROM results 
+            WHERE id IN (SELECT MAX(id) AS id 
+                FROM results 
+                WHERE year <= $year 
+                GROUP BY runner_id 
+                HAVING COUNT(runner_id) = ($year - 2013)) 
+            GROUP BY gender 
+            ORDER BY gender ASC
         ";
 
         $query = \DB::select($sql);
