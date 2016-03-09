@@ -101,11 +101,13 @@ class Result extends Model
         }
 
         $sql = "
-            SELECT runner_id, COUNT(*) 
+            SELECT r1.* 
+            FROM results r1 
+            JOIN (SELECT MAX(id) AS id, runner_id, COUNT(runner_id) 
             FROM results 
-            WHERE year <= $year
+            WHERE year <= $year 
             GROUP BY runner_id 
-            HAVING COUNT(*) = ($year - 2013)
+            HAVING COUNT(runner_id) = ($year - 2013)) r2 ON r2.id = r1.id
         ";
 
         $query = \DB::select($sql);
