@@ -37,6 +37,15 @@
                 z-index: 1000;
                 border-radius: 0;
             }
+
+            .chart div {
+                font: 10px sans-serif;
+                background-color: steelblue;
+                text-align: right;
+                padding: 3px;
+                margin: 1px;
+                color: white;
+            }
         </style>
  
         @yield('header')
@@ -98,44 +107,9 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <h3>Summary</h3>
-                                <table>
-                                    <tr>
-                                        <td>Total Perfect Dopeys</td>
-                                        <td>1,387</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Average Age</td>
-                                        <td>45</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col-md-6">
-                                <h3>Count By Year</h3>
-                                <canvas id="results1" height="300" width="300"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h3>Count By Gender</h3>
-                                <canvas id="results2" height="300" width="300"></canvas>
-                            </div>
-                            <div class="col-md-4">
-                                <h3>Count By Age</h3>
-                                <canvas id="results3" height="300" width="300"></canvas>
-                            </div>
-                            <div class="col-md-4">
-                                <h3>Count By State</h3>
-                                <canvas id="results4" height="300" width="300"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-md-12">
-                                <h3>Count By Time</h3>
-                                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                                <h3>Count By Year</h3>
+                                <div class="chart"></div>
                             </div>
                         </div>
                     </div>
@@ -313,12 +287,13 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script src="/js/iefix.js"></script>
-        <script src="/js/vendor/chart.min.js"></script>
+        <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="/js/vendor/jquery.bxslider.min.js"></script>
 
         <script>
             var navPosition = $('.data-nav').offset().top;
             var navbarOffset = $('.navbar').height();
+            
             $(window).scroll(function() {
                 if ($(window).scrollTop() > (navPosition - navbarOffset)) {
                     $('.data-nav').css('position', 'fixed').css('top', navbarOffset);
@@ -331,79 +306,16 @@
             });
 
             (function () {
-                var context1 = document.getElementById('results1').getContext('2d');
-                var context2 = document.getElementById('results2').getContext('2d');
-                var context3 = document.getElementById('results3').getContext('2d');
-                var context4 = document.getElementById('results4').getContext('2d');
+                var data = [4, 8, 15, 16, 23, 42];
+                
+                d3.select(".chart")
+                    .selectAll("div")
+                    .data(data)
+                    .enter().append("div")
+                    .style("width", function(d) { return d * 10 + "px"; })
+                    .text(function(d) { return d; });
 
-                var chartPerfectsByYear = {
-                    labels: {{ json_encode($perfectsByYear['year']) }},
-                    datasets: [
-                        {
-                            data: {{ json_encode($perfectsByYear['count']) }}
-                        }
-                    ]
-                };
-                var chartPerfectsByGender = {
-                    labels: {!! json_encode($perfectsByGender['gender']) !!},
-                    datasets: [
-                        {
-                            data: {{ json_encode($perfectsByGender['count']) }}
-                        }
-                    ]
-                };
-                var chartPerfectsByAge = {
-                    labels: {{ json_encode($perfectsByAge['age']) }},
-                    datasets: [
-                        {
-                            data: {{ json_encode($perfectsByAge['count']) }}
-                        }
-                    ]
-                };
-                var chartPerfectsByState = {
-                    labels: {!! json_encode($perfectsByState['state']) !!},
-                    datasets: [
-                        {
-                            data: {{ json_encode($perfectsByState['count']) }}
-                        }
-                    ]
-                };
-
-                Chart.defaults.global.responsive = true;
-                Chart.defaults.global.maintainAspectRatio = false;
-
-                new Chart(context1).Bar(chartPerfectsByYear, { 
-                    bezierCurve: false, 
-                    scaleBeginAtZero : true, 
-                    scaleOverride: true, 
-                    scaleStartValue: 0, 
-                    scaleStepWidth: 1000, 
-                    scaleSteps: 7 
-                });
-                new Chart(context2).Bar(chartPerfectsByGender, { 
-                    bezierCurve: false, 
-                    scaleBeginAtZero : true, 
-                    scaleOverride: true, 
-                    scaleStartValue: 0, 
-                    scaleStepWidth: 100, 
-                    scaleSteps: 6 
-                });
-                new Chart(context3).Line(chartPerfectsByAge, { 
-                    bezierCurve: true, 
-                    scaleBeginAtZero : true, 
-                    scaleOverride: true, 
-                    scaleStartValue: 0, 
-                    scaleStepWidth: 1, 
-                    scaleSteps: 60 
-                });
-                new Chart(context4).Bar(chartPerfectsByState, { 
-                    bezierCurve: true, 
-                    scaleBeginAtZero : true, 
-                    scaleOverride: true, 
-                    scaleStartValue: 0, 
-                    scaleStepWidth: 1, 
-                    scaleSteps: 60 
-                });
+                console.log('testing');
 
                 $('.data-wrap').bxSlider({
                     nextSelector: '.data-nav-next',
