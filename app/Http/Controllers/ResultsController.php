@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Storage;
 use App\Result;
+use Config;
+use Storage;
 
 class ResultsController extends Controller
 {
     public function index()
     {
-        // TODO: Put these values in a config somewhere
-        $firstYear = 2014;
-        $lastYear = 2016;
+        $firstYear = Config::get('dopey.firstYear');
+        $lastYear = Config::get('dopey.lastYear');
 
         for ($i = $firstYear; $i <= $lastYear; $i++) {
             $perfects[$i] = Result::getPerfectsByYear($i);
@@ -32,6 +32,11 @@ class ResultsController extends Controller
             $perfectsByAge[$row->age] = $row->count;
         }
 
+        $result = Result::countPerfectsByState();
+        foreach ($result as $row) {
+            $perfectsByState[$row->state] = $row->count;
+        }
+
         $data = [
             'perfectsByYear' => [
                 'year' => array_keys($perfects),
@@ -44,6 +49,10 @@ class ResultsController extends Controller
             'perfectsByAge' => [
                 'age' => array_keys($perfectsByAge),
                 'count' => array_values($perfectsByAge),
+            ],
+            'perfectsByState' => [
+                'state' => array_keys($perfectsByState),
+                'count' => array_values($perfectsByState),
             ],
         ];
 

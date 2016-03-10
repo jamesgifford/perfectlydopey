@@ -127,7 +127,8 @@
                                 <canvas id="results3" height="300" width="300"></canvas>
                             </div>
                             <div class="col-md-4">
-                                <h3>Count By Location</h3>
+                                <h3>Count By State</h3>
+                                <canvas id="results4" height="300" width="300"></canvas>
                             </div>
                         </div>
 
@@ -166,7 +167,7 @@
                                 <h3>Count By Age</h3>
                             </div>
                             <div class="col-md-4">
-                                <h3>Count By Location</h3>
+                                <h3>Count By State</h3>
                             </div>
                         </div>
 
@@ -204,7 +205,7 @@
                                 <h3>Count By Age</h3>
                             </div>
                             <div class="col-md-4">
-                                <h3>Count By Location</h3>
+                                <h3>Count By State</h3>
                             </div>
                         </div>
 
@@ -242,7 +243,7 @@
                                 <h3>Count By Age</h3>
                             </div>
                             <div class="col-md-4">
-                                <h3>Count By Location</h3>
+                                <h3>Count By State</h3>
                             </div>
                         </div>
 
@@ -280,7 +281,7 @@
                                 <h3>Count By Age</h3>
                             </div>
                             <div class="col-md-4">
-                                <h3>Count By Location</h3>
+                                <h3>Count By State</h3>
                             </div>
                         </div>
 
@@ -333,6 +334,7 @@
                 var context1 = document.getElementById('results1').getContext('2d');
                 var context2 = document.getElementById('results2').getContext('2d');
                 var context3 = document.getElementById('results3').getContext('2d');
+                var context4 = document.getElementById('results4').getContext('2d');
 
                 var chartPerfectsByYear = {
                     labels: {{ json_encode($perfectsByYear['year']) }},
@@ -358,6 +360,14 @@
                         }
                     ]
                 };
+                var chartPerfectsByState = {
+                    labels: {!! json_encode($perfectsByState['state']) !!},
+                    datasets: [
+                        {
+                            data: {{ json_encode($perfectsByState['count']) }}
+                        }
+                    ]
+                };
 
                 Chart.defaults.global.responsive = true;
                 Chart.defaults.global.maintainAspectRatio = false;
@@ -379,6 +389,14 @@
                     scaleSteps: 6 
                 });
                 new Chart(context3).Line(chartPerfectsByAge, { 
+                    bezierCurve: true, 
+                    scaleBeginAtZero : true, 
+                    scaleOverride: true, 
+                    scaleStartValue: 0, 
+                    scaleStepWidth: 1, 
+                    scaleSteps: 60 
+                });
+                new Chart(context4).Bar(chartPerfectsByState, { 
                     bezierCurve: true, 
                     scaleBeginAtZero : true, 
                     scaleOverride: true, 
