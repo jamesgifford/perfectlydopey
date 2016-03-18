@@ -167,8 +167,64 @@ class Result extends Model
                 WHERE year <= $year 
                 GROUP BY runner_id 
                 HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
+            AND country = 'US' 
+            AND state NOT IN ('AP') 
             GROUP BY state 
             ORDER BY state ASC
+        ";
+
+        $query = \DB::select($sql);
+
+        return $query;
+    }
+
+    /**
+     * Get the count of Perfect Dopeys grouped by gender
+     */
+    public static function countPerfectsByCountry($year = null)
+    {
+        if ($year == null || $year < Config::get('dopey.firstYear')) {
+            $year = Config::get('dopey.lastYear');
+        }
+
+        $sql = "
+            SELECT country, COUNT(*) AS count
+            FROM results 
+            WHERE id IN (SELECT MAX(id) AS id 
+                FROM results 
+                WHERE year <= $year 
+                GROUP BY runner_id 
+                HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
+            GROUP BY country 
+            ORDER BY country ASC
+        ";
+
+        $query = \DB::select($sql);
+
+        return $query;
+    }
+
+    /**
+     * Get the count of Perfect Dopeys grouped by gender
+     */
+    public static function countPerfectsByRace($race = '5k', $year = null)
+    {
+        if ($year == null || $year < Config::get('dopey.firstYear')) {
+            $year = Config::get('dopey.lastYear');
+        }
+
+        $race .= '_time';
+
+        $sql = "
+            SELECT $race, COUNT(*) AS count
+            FROM results 
+            WHERE id IN (SELECT MAX(id) AS id 
+                FROM results 
+                WHERE year <= $year 
+                GROUP BY runner_id 
+                HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
+            GROUP BY $race 
+            ORDER BY $race ASC
         ";
 
         $query = \DB::select($sql);

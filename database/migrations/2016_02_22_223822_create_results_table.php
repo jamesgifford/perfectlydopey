@@ -21,10 +21,10 @@ class CreateResultsTable extends Migration
             $table->string('last_name', 50);
             $table->integer('age')->unsigned();
             $table->string('gender', 2);
-            $table->string('5k_time', 10);
-            $table->string('10k_time', 10);
-            $table->string('half_time', 10);
-            $table->string('full_time', 10);
+            $table->time('5k_time', 10);
+            $table->time('10k_time', 10);
+            $table->time('half_time', 10);
+            $table->time('full_time', 10);
             $table->string('location', 50);
             $table->string('city', 50);
             $table->string('state', 50);
