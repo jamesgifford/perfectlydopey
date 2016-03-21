@@ -37,6 +37,16 @@ class ResultsController extends Controller
             $perfectsByState[$row->state] = $row->count;
         }
 
+        $result = Result::countPerfectsByCountry();
+        foreach ($result as $row) {
+            $perfectsByCountry[$row->country] = $row->count;
+        }
+
+        $result = Result::countPerfectsByEvent('full');
+        foreach ($result as $row) {
+            $perfectsBy5k[$row->{'minutes'}] = $row->count;
+        }
+
         $data = [
             'perfectsByYear' => [
                 'year' => array_keys($perfects),
@@ -53,6 +63,10 @@ class ResultsController extends Controller
             'perfectsByState' => [
                 'state' => array_keys($perfectsByState),
                 'count' => array_values($perfectsByState),
+            ],
+            'perfectsByCountry' => [
+                'country' => array_keys($perfectsByCountry),
+                'count' => array_values($perfectsByCountry),
             ],
         ];
 

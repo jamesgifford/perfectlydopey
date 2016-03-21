@@ -205,26 +205,28 @@ class Result extends Model
     }
 
     /**
-     * Get the count of Perfect Dopeys grouped by gender
+     * Get the count of Perfect Dopeys grouped by race length
      */
-    public static function countPerfectsByRace($race = '5k', $year = null)
+    public static function countPerfectsByEvent($event = '5k', $year = null)
     {
         if ($year == null || $year < Config::get('dopey.firstYear')) {
             $year = Config::get('dopey.lastYear');
         }
 
-        $race .= '_time';
+        $field = $event.'_time';
 
         $sql = "
-            SELECT $race, COUNT(*) AS count
-            FROM results 
-            WHERE id IN (SELECT MAX(id) AS id 
+            SELECT minutes, COUNT(*) AS count
+            FROM (SELECT runner_id, ROUND(SUM(MINUTE($field) + (HOUR($field)*60))/3) AS minutes, COUNT(*) AS count
                 FROM results 
-                WHERE year <= $year 
-                GROUP BY runner_id 
-                HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
-            GROUP BY $race 
-            ORDER BY $race ASC
+                WHERE runner_id IN (SELECT runner_id 
+                    FROM results 
+                    WHERE year <= $year 
+                    GROUP BY runner_id 
+                    HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
+                GROUP BY runner_id) AS thing
+            GROUP BY minutes
+            ORDER BY minutes ASC
         ";
 
         $query = \DB::select($sql);
