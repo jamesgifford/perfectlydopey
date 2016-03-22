@@ -60,8 +60,8 @@
     <script>
         // Perfect count by year
         new Chartist.Line('#perfect-count-by-year', {
-            labels: {!! json_encode($perfectsByYear['year']) !!},
-            series: [{!! json_encode($perfectsByYear['count']) !!}]
+            labels: {!! json_encode($perfect['countByYear']['labels']) !!},
+            series: [{!! json_encode($perfect['countByYear']['series']) !!}]
         }, {
             fullWidth: true,
             showArea: true,
@@ -79,7 +79,7 @@
 
         // Perfect count by gender
         var data = {
-            series: {!! json_encode($perfectsByGender['count']) !!}
+            series: {!! json_encode($perfect['countByGender']['series']) !!}
         };
 
         var sum = function(a, b) { return a + b };
@@ -101,8 +101,8 @@
 
         // Perfect count by age
         new Chartist.Bar('#perfect-count-by-age', {
-            labels: {!! json_encode($perfectsByAge['age']) !!},
-            series: [{!! json_encode($perfectsByAge['count']) !!}]
+            labels: {!! json_encode($perfect['countByAge']['labels']) !!},
+            series: [{!! json_encode($perfect['countByAge']['series']) !!}]
         }, {
             plugins: [
                 Chartist.plugins.tooltip()
@@ -111,8 +111,8 @@
 
         // Perfect count by state
         new Chartist.Bar('#perfect-count-by-state', {
-            labels: {!! json_encode($perfectsByState['state']) !!},
-            series: [{!! json_encode($perfectsByState['count']) !!}]
+            labels: {!! json_encode($perfect['countByState']['labels']) !!},
+            series: [{!! json_encode($perfect['countByState']['series']) !!}]
         }, {
             fullWidth: true,
             seriesBarDistance: 10,
@@ -128,8 +128,8 @@
 
         // Perfect count by country
         new Chartist.Bar('#perfect-count-by-country', {
-            labels: {!! json_encode($perfectsByCountry['country']) !!},
-            series: [{!! json_encode($perfectsByCountry['count']) !!}]
+            labels: {!! json_encode($perfect['countByCountry']['labels']) !!},
+            series: [{!! json_encode($perfect['countByCountry']['series']) !!}]
         }, {
             fullWidth: true,
             seriesBarDistance: 10,

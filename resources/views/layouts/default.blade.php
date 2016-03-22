@@ -37,12 +37,34 @@
 
         <header class="jumbotron">
             <div class="container">
-                <h1>Perfectly Dopey</h1>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                <h1>The Dopey Challenge</h1>
+                <p>Disney's ultimate running experience involves four races in four days</p>
             </div>
         </header>
 
         <main role="main" id="data">
+            <div class="data-nav navbar navbar-default">
+                <div class="container">
+                    <ul class="data-nav-links nav navbar-nav">
+                        <li><a class="data-nav-prev" href=""></a></li>
+                        <li><a data-slide-index="0" href="">Perfect</a></li>
+                        <li><a data-slide-index="1" href="">Overall</a></li>
+                        <li><a data-slide-index="2" href="">2016</a></li>
+                        <li><a data-slide-index="3" href="">2015</a></li>
+                        <li><a data-slide-index="4" href="">2014</a></li>
+                        <li><a class="data-nav-next" href=""></a></li>
+                    </ul>
+                </div>
+            </div> <!-- /.data-nav -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Perfecly Dopey</p>
+                    </div>
+                </div>
+            </div>
+
             @yield('content')
         </main>
 

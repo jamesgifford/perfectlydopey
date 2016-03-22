@@ -42,31 +42,40 @@ class ResultsController extends Controller
             $perfectsByCountry[$row->country] = $row->count;
         }
 
-        $result = Result::countPerfectsByEvent('full');
+        $result = Result::countPerfectsByEvent('5k');
         foreach ($result as $row) {
             $perfectsBy5k[$row->{'minutes'}] = $row->count;
         }
 
         $data = [
-            'perfectsByYear' => [
-                'year' => array_keys($perfects),
-                'count' => array_values($perfectCounts),
-            ],
-            'perfectsByGender' => [
-                'gender' => array_keys($perfectsByGender),
-                'count' => array_values($perfectsByGender),
-            ],
-            'perfectsByAge' => [
-                'age' => array_keys($perfectsByAge),
-                'count' => array_values($perfectsByAge),
-            ],
-            'perfectsByState' => [
-                'state' => array_keys($perfectsByState),
-                'count' => array_values($perfectsByState),
-            ],
-            'perfectsByCountry' => [
-                'country' => array_keys($perfectsByCountry),
-                'count' => array_values($perfectsByCountry),
+            'perfect' => [
+                'countByYear' => [
+                    'labels' => array_keys($perfects),
+                    'series' => array_values($perfectCounts),
+                ],
+                'countByGender' => [
+                    'labels' => array_keys($perfectsByGender),
+                    'series' => array_values($perfectsByGender),
+                ],
+                'countByAge' => [
+                    'labels' => array_keys($perfectsByAge),
+                    'series' => array_values($perfectsByAge),
+                ],
+                'countByState' => [
+                    'labels' => array_keys($perfectsByState),
+                    'series' => array_values($perfectsByState),
+                ],
+                'countByCountry' => [
+                    'labels' => array_keys($perfectsByCountry),
+                    'series' => array_values($perfectsByCountry),
+                ],
+                'countByEvent' => [
+                    'labels' => '',
+                    '5k_series' => '',
+                    '10k_series' => '',
+                    'half_series' => '',
+                    'full_series' => '',
+                ]
             ],
         ];
 
