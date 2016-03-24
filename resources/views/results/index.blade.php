@@ -5,12 +5,18 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <h2>Perfects By Year</h2>
-                <div id="perfect-count-by-year" class="ct-chart ct-golden-section ct-line"></div>
+                <h3>Perfect Dopey Runners By Year</h3>
             </div>
             <div class="col-md-6">
-                <h2>Perfects By Gender</h2>
+                <div id="perfect-count-by-year" class="ct-chart ct-golden-section ct-line"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <div id="perfect-count-by-gender" class="ct-golden-section ct-pie"></div>
+            </div>
+            <div class="col-md-6">
+                <h3>Perfect Dopey Runners By Gender</h3>
             </div>
         </div>
     </div>

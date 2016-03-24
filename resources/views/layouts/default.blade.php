@@ -9,6 +9,26 @@
 
         <link rel="stylesheet" href="/css/chartist-plugin-tooltip.css">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        <style>
+            nav.navbar {
+                background: #31353B;
+            }
+
+            .navbar-default a,
+            .navbar-brand a,
+            nav a {
+                color: #fff !important;
+            }
+
+            header.jumbotron {
+                background: #31353B;
+                color: #fff;
+            }
+
+            div.navbar {
+                background: #31353B;
+            }
+        </style>
 
         @yield('header')
     </head>
@@ -47,11 +67,11 @@
                 <div class="container">
                     <ul class="data-nav-links nav navbar-nav">
                         <li><a class="data-nav-prev" href=""></a></li>
-                        <li><a data-slide-index="0" href="">Perfect</a></li>
-                        <li><a data-slide-index="1" href="">Overall</a></li>
-                        <li><a data-slide-index="2" href="">2016</a></li>
-                        <li><a data-slide-index="3" href="">2015</a></li>
-                        <li><a data-slide-index="4" href="">2014</a></li>
+                        <li><a class="btn btn-primary" data-slide-index="0" href="">Perfect</a></li>
+                        <li><a class="btn btn-primary" data-slide-index="1" href="">Overall</a></li>
+                        <li><a class="btn btn-primary" data-slide-index="2" href="">2016</a></li>
+                        <li><a class="btn btn-primary" data-slide-index="3" href="">2015</a></li>
+                        <li><a class="btn btn-primary" data-slide-index="4" href="">2014</a></li>
                         <li><a class="data-nav-next" href=""></a></li>
                     </ul>
                 </div>
@@ -60,7 +80,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Perfecly Dopey</p>
+                        <h2>Perfectly Dopey Runners</h2>
+                        <p>To be "perfect" at a running event involves successfully completing every running of that event since its inception.</p>
                     </div>
                 </div>
             </div>
@@ -74,6 +95,30 @@
         <script src="/js/vendor/jquery.bxslider.min.js"></script>
         <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
         <script src="/js/chartist-plugin-tooltip.min.js"></script>
+
+        <script>
+            var navPosition = $('.data-nav').offset().top;
+            var navbarOffset = $('.navbar').height();
+            
+            $(window).scroll(function() {
+                if ($(window).scrollTop() > (navPosition - navbarOffset)) {
+                    $('.data-nav').css('position', 'fixed').css('top', navbarOffset);
+                    $('.data-wrap').css('margin-top', navbarOffset + 0);
+                }
+                else {
+                    $('.data-nav').css('position', 'relative').css('top', 'inherit');
+                    $('.data-wrap').css('margin-top', 0);
+                }
+            });
+
+            (function () {
+                $('.data-wrap').bxSlider({
+                    nextSelector: '.data-nav-next',
+                    prevSelector: '.data-nav-prev',
+                    pagerCustom: '.data-nav-links'
+                });
+            });
+        </script>
 
         @yield('footer')
     </body>
