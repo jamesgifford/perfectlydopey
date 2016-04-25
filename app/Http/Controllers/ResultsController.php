@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Cache;
 use App\Result;
 use Config;
 use Storage;
@@ -14,6 +15,15 @@ class ResultsController extends Controller
 {
     public function index()
     {
+        // Check data cache first
+        $cache = Cache::orderBy('created_at', 'desc')->first();
+
+        if ($cache) {
+            $data = unserialize($cache->data);
+
+            return view('results.index', $data);
+        }
+
         $firstYear = Config::get('dopey.firstYear');
         $lastYear = Config::get('dopey.lastYear');
 
@@ -78,6 +88,11 @@ class ResultsController extends Controller
                 ]
             ],
         ];
+
+        // Store the compiled data in the database as a cache
+        $cache = new Cache();
+        $cache->data = serialize($data);
+        $cache->save();
 
         return view('results.index', $data);
     }
