@@ -7,7 +7,8 @@
         <meta property="og:title" content="Perfectly Dopey" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="http://perfectlydopey.com" />
-        <meta property="og:image" content="http://perfectlydopey.com/assets/img/dopey-3a-small.jpg" />
+        <meta property="og:image" content="http://perfectlydopey.com/assets/img/dopey-3a.jpg" />
+        <meta property="og:description" content="At the Walt Disney World Marathon Weekend there are four running events held over four days: a 5k, 10k, half marathon, and full marathon. To finish all four races is known as the Dopey Challenge. To complete every Dopey Challenge since the first one is known as being Perfectly Dopey." />
 
         <!-- Page title -->
         <title>Perfectly Dopey</title>
