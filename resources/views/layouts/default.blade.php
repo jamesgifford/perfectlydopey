@@ -6,7 +6,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
 
         <!-- Page title -->
-        <title>Template Generator</title>
+        <title>Perfectly Dopey</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic,700italic|Raleway:300,500,800|Source+Sans+Pro:100,300,400,600,700,900" rel="stylesheet" type="text/css" />
@@ -106,7 +106,7 @@
         </nav>
 
         <!-- Share Window -->
-        <div class="dropdown share top right hidden" data-dropdown-id="1" data-text="Take a look at this" data-url="http://designmodo.com" data-pinterest-image="http://designmodo.com/wp-content/uploads/2015/10/Presentation.jpg">
+        <div class="dropdown share top right hidden" data-dropdown-id="1" data-text="Take a look at this" data-url="http://perfectlydopey.com" data-pinterest-image="http://perfectlydopey.com/assets/img/dopey-3a.jpg">
             <h3>Share</h3>
             <ul>
                 <li class="facebook"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#fb-like"></use></svg></li>
