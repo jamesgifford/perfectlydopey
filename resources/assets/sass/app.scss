@@ -1,5 +1,15 @@
 @import "vendor/chartist/chartist";
 
+.chart {
+    padding: 0 0;
+}
+
+@media (max-width: 480px) {
+    p {
+        display: none !important;
+    }
+}
+
 .ct-grid {
     @include ct-chart-grid(rgba(255, 255, 255, 0.5), 1px);
 }

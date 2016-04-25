@@ -206,7 +206,7 @@
                         <div class="fix-12-12">
                             <ul class="grid">
                                 <li class="col-12-12">
-                                    <div id="perfect-count-by-age" class="ae-4 fromLeft ct-double-octave ct-bar"></div>
+                                    <div class="chart"><div id="perfect-count-by-age" class="ae-4 fromLeft ct-double-octave ct-bar"></div></div>
                                 </li>
                             </ul>
                         </div>
@@ -424,7 +424,16 @@
             }, {
                 plugins: [
                     Chartist.plugins.tooltip()
-                ]
+                ],
+                chartPadding: {
+                    right: 0,
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                },
+                axisY: {
+                    onlyInteger: true,
+                },
             });
 
             // Perfect count by state
