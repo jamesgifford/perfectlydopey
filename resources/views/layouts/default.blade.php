@@ -7,7 +7,7 @@
         <meta property="og:title" content="Perfectly Dopey" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="http://perfectlydopey.com" />
-        <meta property="og:image" content="http://perfectlydopey.com/assets/img/dopey-3a.jpg" />
+        <meta property="og:image" content="http://perfectlydopey.com/assets/img/dopey-3a-small.jpg" />
 
         <!-- Page title -->
         <title>Perfectly Dopey</title>
