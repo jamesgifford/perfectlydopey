@@ -1,2 +1,26 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "vendor/chartist/chartist";
 
+.ct-grid {
+    @include ct-chart-grid(rgba(255, 255, 255, 0.5), 1px);
+}
+
+.ct-bar .ct-label {
+    @include ct-chart-label(rgba(255, 255, 255, 1), 0.65rem);
+}
+
+.ct-line .ct-label {
+    @include ct-chart-label(rgba(255, 255, 255, 1), 0.65rem);
+}
+
+.ct-pie .ct-label {
+    @include ct-chart-label(rgba(255, 255, 255, 1), 1.5rem);
+}
+
+
+#perfect-count-by-country .ct-bar {
+    @include ct-chart-bar(20px);
+}
+
+#perfect-count-by-country .ct-grid {
+    @include ct-chart-grid(rgba(255, 255, 255, 1), 1px);
+}
