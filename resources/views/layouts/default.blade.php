@@ -4,6 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta property="og:title" content="Perfectly Dopey" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="http://perfectlydopey.com" />
+        <meta property="og:image" content="http://perfectlydopey.com/assets/img/dopey-3a.jpg" />
 
         <!-- Page title -->
         <title>Perfectly Dopey</title>
