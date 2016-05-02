@@ -55,7 +55,7 @@
       }
     }
 
-    console.log(this.bounds.values);
+    //console.log(this.bounds.values);
     
     Chartist.AutoScaleAxis.super.constructor.call(this,
       axisUnit,
@@ -74,10 +74,10 @@
     var min = this.bounds.min;
     if (this.scale.type === 'log') {
         var base = this.scale.base;
-        console.log(max);
-        console.log(min);
-        console.log(base);
-        console.log(value);
+        //console.log(max);
+        //console.log(min);
+        //console.log(base);
+        //console.log(value);
         if (value == 1) {
             value = 1.5;
         }
@@ -85,8 +85,8 @@
       if (thingy < 0) {
         thingy = 1;
       }
-      console.log(thingy);
-      console.log('-------------------');
+      //console.log(thingy);
+      //console.log('-------------------');
       return thingy;
     }
     return this.axisLength * (value - min) / this.bounds.range;      

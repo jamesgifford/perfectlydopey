@@ -134,7 +134,7 @@ class Result extends Model
         }
 
         $sql = "
-            SELECT gender, COUNT(*) AS count
+            SELECT CASE gender WHEN 'M' THEN 'Men' ELSE 'Women' END AS gender, COUNT(*) AS count
             FROM results 
             WHERE id IN (SELECT MAX(id) AS id 
                 FROM results 
