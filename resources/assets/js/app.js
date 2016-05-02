@@ -21,6 +21,6 @@ $(window).resize(function() {
 
 // redraw graph when window resize is completed  
 $(window).on('resizeEnd', function() {
-    location.reload(); // TODO: trigger a reload only if the window size changes too much, else do a redraw
+    //location.reload(); // TODO: trigger a reload only if the window size changes too much, else do a redraw
     //drawCharts();
 });
