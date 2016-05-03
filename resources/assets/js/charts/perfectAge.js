@@ -25,13 +25,12 @@ function drawChartPerfectAge() {
         },
         vAxis: {
             title: '',
-            format: '',
-            showTextEvery: 1
+            format: ''
         },
         hAxis: {
             title: '',
             format: '',
-            showTextEvery: 2
+            showTextEvery: 4
         },
         theme: 'material',
         bar: {
