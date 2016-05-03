@@ -19,11 +19,11 @@ class ResultsController extends Controller
         $chartData = [];
 
         // Check for cached data
-        $cache = Cache::orderBy('created_at', 'desc')->first();
+        //$cache = Cache::orderBy('created_at', 'desc')->first();
 
-        if ($cache) {
-            $chartData = unserialize($cache->data);
-        }
+        //if ($cache) {
+        //    $chartData = unserialize($cache->data);
+        //}
 
         // If no data is cached, re-build the chart data
         if (!$chartData || !count($chartData)) {
@@ -45,9 +45,15 @@ class ResultsController extends Controller
 
             // Count by age
             $result = Result::countPerfectsByAge();
-            $chartData['countByAge'][] = ['Age','Total'];
+            //$chartData['countByAge'][] = ['Age','Total'];
+            $last = 0;
             foreach ($result as $row) {
-                $chartData['countByAge'][] = [$row->age, $row->count];
+                while ($last && $last + 1 !== (int)$row->age) {
+                    $chartData['countByAge'][] = [(string)++$last, 0];
+                }
+
+                $chartData['countByAge'][] = [(string)$row->age, (int)$row->count];
+                $last = (int)$row->age;
             }
 
             // Count by State
@@ -71,9 +77,9 @@ class ResultsController extends Controller
             }*/
 
             // Store the compiled data in the database as a cache
-            $cache = new Cache();
-            $cache->data = serialize($chartData);
-            $cache->save();
+            //$cache = new Cache();
+            //$cache->data = serialize($chartData);
+            //$cache->save();
         }
 
         // Make the chart data available to JavaScript

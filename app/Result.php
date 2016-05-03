@@ -119,6 +119,8 @@ class Result extends Model
             ORDER BY age ASC
         ";
 
+        echo $sql;
+
         $query = \DB::select($sql);
 
         return $query;

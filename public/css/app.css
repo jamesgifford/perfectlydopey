@@ -1120,4 +1120,17 @@
       position: absolute;
       top: 0; } }
 
+.navbar-default {
+  background: #333; }
+
+.navbar-default .navbar-brand {
+  color: #fff; }
+
+.navbar-default .navbar-brand:hover {
+  color: #fff; }
+
+.navbar-title {
+  color: #fff;
+  text-align: center; }
+
 /*# sourceMappingURL=app.css.map */

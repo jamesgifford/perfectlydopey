@@ -1,6 +1,11 @@
 // Show count of Perfect Dopeys by Age
 function drawChartPerfectAge() {
-    var data = google.visualization.arrayToDataTable(PerfectlyDopey.countByAge);
+    //var data = google.visualization.arrayToDataTable(PerfectlyDopey.countByAge);
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Age');
+    data.addColumn('number', 'Total');
+    data.addRows(PerfectlyDopey.countByAge);
 
     var options = {
         chart: {
@@ -8,7 +13,7 @@ function drawChartPerfectAge() {
         },
         chartArea: {
             left: 35,
-            top: 0,
+            top: 10,
             width: '87%',
             height: '82%'
         },
@@ -20,19 +25,21 @@ function drawChartPerfectAge() {
         },
         vAxis: {
             title: '',
-            format: ''
+            format: '',
+            showTextEvery: 1
         },
         hAxis: {
             title: '',
-            format: ''
+            format: '',
+            showTextEvery: 2
         },
         theme: 'material',
         bar: {
-            groupWidth: "45%"
+            groupWidth: "100%"
         }
     };
 
-    var chart = new google.visualization.BarChart(document.getElementById('perfectAge'));
+    var chart = new google.visualization.ColumnChart(document.getElementById('perfectAge'));
     chart.draw(data, options);
 };
 // Show count of Perfect Dopeys by Country
@@ -57,7 +64,7 @@ function drawChartPerfectCountry() {
         },
         theme: 'material',
         colorAxis: {
-            colors: ['blue', 'black']
+            colors: ['#BFD3B3', 'green']
         }
     };
 
@@ -114,7 +121,7 @@ function drawChartPerfectState() {
         region: "US",
         resolution: "provinces",
         colorAxis: {
-            colors: ['blue', 'black']
+            colors: ['#BFD3B3', 'green']
         }
     };
 

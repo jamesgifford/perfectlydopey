@@ -22,7 +22,7 @@ function drawChartPerfectState() {
         region: "US",
         resolution: "provinces",
         colorAxis: {
-            colors: ['blue', 'black']
+            colors: ['#BFD3B3', 'green']
         }
     };
 

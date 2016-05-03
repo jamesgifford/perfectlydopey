@@ -1,0 +1,125 @@
+// Scales for responsive SVG containers
+$ct-lg-scales: ((1/1), (15/16), (8/9), (5/6), (4/5), (3/4), (2/3), (5/8), (1/1.618), (3/5), (9/16), (8/15), (1/2), (2/5), (3/8), (1/3), (1/4)) !default;
+$ct-lg-scales-names: (ct-lg-square, ct-lg-minor-second, ct-lg-major-second, ct-lg-minor-third, ct-lg-major-third, ct-lg-perfect-fourth, ct-lg-perfect-fifth, ct-lg-minor-sixth, ct-lg-golden-section, ct-lg-major-sixth, ct-lg-minor-seventh, ct-lg-major-seventh, ct-lg-octave, ct-lg-major-tenth, ct-lg-major-eleventh, ct-lg-major-twelfth, ct-lg-double-octave) !default;
+
+$ct-md-scales: ((1/1), (15/16), (8/9), (5/6), (4/5), (3/4), (2/3), (5/8), (1/1.618), (3/5), (9/16), (8/15), (1/2), (2/5), (3/8), (1/3), (1/4)) !default;
+$ct-md-scales-names: (ct-md-square, ct-md-minor-second, ct-md-major-second, ct-md-minor-third, ct-md-major-third, ct-md-perfect-fourth, ct-md-perfect-fifth, ct-md-minor-sixth, ct-md-golden-section, ct-md-major-sixth, ct-md-minor-seventh, ct-md-major-seventh, ct-md-octave, ct-md-major-tenth, ct-md-major-eleventh, ct-md-major-twelfth, ct-md-double-octave) !default;
+
+$ct-sm-scales: ((1/1), (15/16), (8/9), (5/6), (4/5), (3/4), (2/3), (5/8), (1/1.618), (3/5), (9/16), (8/15), (1/2), (2/5), (3/8), (1/3), (1/4)) !default;
+$ct-sm-scales-names: (ct-sm-square, ct-sm-minor-second, ct-sm-major-second, ct-sm-minor-third, ct-sm-major-third, ct-sm-perfect-fourth, ct-sm-perfect-fifth, ct-sm-minor-sixth, ct-sm-golden-section, ct-sm-major-sixth, ct-sm-minor-seventh, ct-sm-major-seventh, ct-sm-octave, ct-sm-major-tenth, ct-sm-major-eleventh, ct-sm-major-twelfth, ct-sm-double-octave) !default;
+
+$ct-include-classes: true !default;
+$ct-class-chart: ct-chart !default;
+
+@mixin ct-lg-responsive-svg-container($width: 100%, $ratio: $ct-container-ratio) {
+    @media (min-width: 992px) {
+        display: block;
+        position: relative;
+        width: $width;
+
+        &:before {
+            content: "";
+            display: block;
+            float: left;
+            height: 0;
+            padding-bottom: $ratio * 100%;
+            width: 0;
+        }
+
+        &:after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+
+        > svg {
+            display: block;
+            left: 0;
+            position: absolute;
+            top: 0;
+        }
+    }
+}
+
+@mixin ct-md-responsive-svg-container($width: 100%, $ratio: $ct-container-ratio) {
+    @media (min-width: 540px) and (max-width: 992px) {
+        display: block;
+        position: relative;
+        width: $width;
+
+        &:before {
+            content: "";
+            display: block;
+            float: left;
+            height: 0;
+            padding-bottom: $ratio * 100%;
+            width: 0;
+        }
+
+        &:after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+
+        > svg {
+            display: block;
+            left: 0;
+            position: absolute;
+            top: 0;
+        }
+    }
+}
+
+@mixin ct-sm-responsive-svg-container($width: 100%, $ratio: $ct-container-ratio) {
+    @media (max-width: 540px) {
+        display: block;
+        position: relative;
+        width: $width;
+
+        &:before {
+            content: "";
+            display: block;
+            float: left;
+            height: 0;
+            padding-bottom: $ratio * 100%;
+            width: 0;
+        }
+
+        &:after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+
+        > svg {
+            display: block;
+            left: 0;
+            position: absolute;
+            top: 0;
+        }
+    }
+}
+
+@if $ct-include-classes {
+    // Large scales
+    @for $i from 0 to length($ct-lg-scales-names) {
+        .#{nth($ct-lg-scales-names, $i + 1)} {
+            @include ct-lg-responsive-svg-container($ratio: nth($ct-lg-scales, $i + 1));
+        }
+    }
+
+    // Medium scales
+    @for $i from 0 to length($ct-md-scales-names) {
+        .#{nth($ct-md-scales-names, $i + 1)} {
+            @include ct-md-responsive-svg-container($ratio: nth($ct-md-scales, $i + 1));
+        }
+    }
+
+    // Small scales
+    @for $i from 0 to length($ct-sm-scales-names) {
+        .#{nth($ct-sm-scales-names, $i + 1)} {
+            @include ct-sm-responsive-svg-container($ratio: nth($ct-sm-scales, $i + 1));
+        }
+    }
+}

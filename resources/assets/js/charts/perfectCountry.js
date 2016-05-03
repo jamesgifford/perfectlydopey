@@ -20,7 +20,7 @@ function drawChartPerfectCountry() {
         },
         theme: 'material',
         colorAxis: {
-            colors: ['blue', 'black']
+            colors: ['#BFD3B3', 'green']
         }
     };
 
