@@ -19,11 +19,11 @@ class ResultsController extends Controller
         $chartData = [];
 
         // Check for cached data
-        //$cache = Cache::orderBy('created_at', 'desc')->first();
+        $cache = Cache::orderBy('created_at', 'desc')->first();
 
-        //if ($cache) {
-        //    $chartData = unserialize($cache->data);
-        //}
+        if ($cache) {
+            $chartData = unserialize($cache->data);
+        }
 
         // If no data is cached, re-build the chart data
         if (!$chartData || !count($chartData)) {
@@ -77,9 +77,9 @@ class ResultsController extends Controller
             }*/
 
             // Store the compiled data in the database as a cache
-            //$cache = new Cache();
-            //$cache->data = serialize($chartData);
-            //$cache->save();
+            $cache = new Cache();
+            $cache->data = serialize($chartData);
+            $cache->save();
         }
 
         // Make the chart data available to JavaScript
