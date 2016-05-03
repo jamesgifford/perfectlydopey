@@ -15,7 +15,7 @@ function drawChartPerfectAge() {
             left: 35,
             top: 10,
             width: '87%',
-            height: '82%'
+            height: '70%'
         },
         backgroundColor: {
             fill: 'none'
