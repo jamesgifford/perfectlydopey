@@ -9,6 +9,13 @@ function drawCharts() {
     drawChartPerfectCountry();
 };
 
+var currentWindowWidth = currentWindowHeight = 0;
+
+$(document).ready(function() {
+    originalWindowWidth = window.innerWidth;
+    originalWindowHeight = window.innerHeight;
+});
+
 // create trigger to resizeEnd event     
 $(window).resize(function() {
     if (this.resizeTO) {
@@ -21,6 +28,12 @@ $(window).resize(function() {
 
 // redraw graph when window resize is completed  
 $(window).on('resizeEnd', function() {
-    //location.reload(); // TODO: trigger a reload only if the window size changes too much, else do a redraw
-    //drawCharts();
+    var currentWindowWidth = window.innerWidth;
+    var currentWindowHeight = window.innerHeight;
+    var widthChange = (Math.abs(originalWindowWidth - currentWindowWidth) / originalWindowWidth) * 100;
+    var heightChange = (Math.abs(originalWindowHeight - currentWindowHeight) / originalWindowHeight) * 100;
+
+    if (widthChange > 10 || heightChange > 10) {
+        location.reload();
+    }
 });

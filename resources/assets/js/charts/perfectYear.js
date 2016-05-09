@@ -13,7 +13,7 @@ function drawChartPerfectYear() {
             height: '88%',
             left: 35,
             top: 0,
-            width: '82%'
+            width: '90%'
         },
         backgroundColor: {
             fill: 'none'
@@ -38,9 +38,9 @@ function drawChartPerfectYear() {
             title: '',
             format: '',
             gridlines: {
-                count: 3,
                 color: '#000'
-            }
+            },
+            slantedText: true,
         },
         theme: 'material'
     };
