@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Cache;
+//use App\Cache;
 use App\Result;
 use Config;
 use JavaScript;
@@ -19,9 +19,9 @@ class ResultsController extends Controller
         $chartData = [];
 
         // Check for cached data
-        $cache = Cache::orderBy('created_at', 'desc')->first();
+        //$cache = Cache::orderBy('created_at', 'desc')->first();
 
-        if ($cache) {
+        if (false) {
             $chartData = unserialize($cache->data);
         }
 
@@ -77,9 +77,9 @@ class ResultsController extends Controller
             }*/
 
             // Store the compiled data in the database as a cache
-            $cache = new Cache();
-            $cache->data = serialize($chartData);
-            $cache->save();
+            //$cache = new Cache();
+            //$cache->data = serialize($chartData);
+            //$cache->save();
         }
 
         // Make the chart data available to JavaScript
