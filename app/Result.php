@@ -7,11 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {
-    protected $table = 'results';
-    
-    protected $fillable = [
-        'runner_id', 'year', 'full_name', 'first_name', 'last_name', 'age', 'gender', '5k_time', '10k_time', 'half_time', 'full_time', 'location', 'city', 'state', 'country'
-    ];
+    protected $table = 'modified_results';
+    protected $guarded = [];
+
+    /**
+     * Constructor
+     * @param   string  $resultType     the type of results to use (original or modified)
+     * @param   array   $attributes     other model attributes
+     */
+    public function __construct($resultType = 'original', $attributes = array())
+    {
+        $resultType = in_array($resultType, ['original', 'modified']) ? $resultType : 'modified';
+        $this->table = $resultType . '_results';
+
+        parent::__construct($attributes);
+    }
+
+    /**
+     * Allow static methods access to the table name
+     * @return  string
+     */
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
+    }
 
     /**
      * Get the next available runner id value
@@ -30,18 +49,21 @@ class Result extends Model
      */
     public static function isExistingRunner($result)
     {
-        // An existing runner has the same name and gender, and a younger age based on the difference between the two years
-        $query = \DB::select('
+        $table = Result::getTableName();
+
+        $sql = '
             SELECT * 
-            FROM results 
+            FROM '.$table.' 
             WHERE 1=1 
             AND full_name = "'.$result->full_name.'" 
             AND gender = "'.$result->gender.'" 
-            AND year < "'.$result->year.'"
+            AND year < "'.$result->year.'" 
             AND age = "'.$result->age.'" - ("'.$result->year.'" - year) 
             ORDER BY year DESC 
             LIMIT 1
-        ');
+        ';
+
+        $query = \DB::select($sql);
 
         return is_array($query) && count($query) ? $query[0] : false;
     }
@@ -64,11 +86,15 @@ class Result extends Model
      */
     public static function getTotalsByYear()
     {
-        $query = \DB::select("
+        $table = Result::getTableName();
+
+        $sql = "
             SELECT year, COUNT(*) 
-            FROM results 
+            FROM $table 
             GROUP BY year
-        ");
+        ";
+
+        $query = \DB::select($sql);
 
         return $query;
     }
@@ -79,15 +105,17 @@ class Result extends Model
      */
     public static function getPerfectsByYear($year = null)
     {
+        $table = Result::getTableName();
+
         if ($year == null || $year < Config::get('dopey.firstYear')) {
             $year = Config::get('dopey.lastYear');
         }
 
         $sql = "
             SELECT r1.* 
-            FROM results r1 
+            FROM $table r1 
             JOIN (SELECT MAX(id) AS id, runner_id, COUNT(runner_id) 
-            FROM results 
+            FROM $table 
             WHERE year <= $year 
             GROUP BY runner_id 
             HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) r2 ON r2.id = r1.id
@@ -103,23 +131,23 @@ class Result extends Model
      */
     public static function countPerfectsByAge($year = null)
     {
+        $table = Result::getTableName();
+
         if ($year == null || $year < Config::get('dopey.firstYear')) {
             $year = Config::get('dopey.lastYear');
         }
 
         $sql = "
             SELECT age, COUNT(*) AS count
-            FROM results 
+            FROM $table 
             WHERE id IN (SELECT MAX(id) AS id 
-                FROM results 
+                FROM $table 
                 WHERE year <= $year 
                 GROUP BY runner_id 
                 HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
             GROUP BY age 
             ORDER BY age ASC
         ";
-
-        echo $sql;
 
         $query = \DB::select($sql);
 
@@ -131,15 +159,17 @@ class Result extends Model
      */
     public static function countPerfectsByGender($year = null)
     {
+        $table = Result::getTableName();
+
         if ($year == null || $year < Config::get('dopey.firstYear')) {
             $year = Config::get('dopey.lastYear');
         }
 
         $sql = "
             SELECT CASE gender WHEN 'M' THEN 'Men' ELSE 'Women' END AS gender, COUNT(*) AS count
-            FROM results 
+            FROM $table 
             WHERE id IN (SELECT MAX(id) AS id 
-                FROM results 
+                FROM $table 
                 WHERE year <= $year 
                 GROUP BY runner_id 
                 HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
@@ -157,15 +187,17 @@ class Result extends Model
      */
     public static function countPerfectsByState($year = null)
     {
+        $table = Result::getTableName();
+
         if ($year == null || $year < Config::get('dopey.firstYear')) {
             $year = Config::get('dopey.lastYear');
         }
 
         $sql = "
             SELECT state, COUNT(*) AS count
-            FROM results 
+            FROM $table 
             WHERE id IN (SELECT MAX(id) AS id 
-                FROM results 
+                FROM $table 
                 WHERE year <= $year 
                 GROUP BY runner_id 
                 HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
@@ -185,15 +217,17 @@ class Result extends Model
      */
     public static function countPerfectsByCountry($year = null)
     {
+        $table = Result::getTableName();
+
         if ($year == null || $year < Config::get('dopey.firstYear')) {
             $year = Config::get('dopey.lastYear');
         }
 
         $sql = "
             SELECT country, COUNT(*) AS count
-            FROM results 
+            FROM $table 
             WHERE id IN (SELECT MAX(id) AS id 
-                FROM results 
+                FROM $table 
                 WHERE year <= $year 
                 GROUP BY runner_id 
                 HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
@@ -211,6 +245,8 @@ class Result extends Model
      */
     public static function countPerfectsByEvent($event = '5k', $year = null)
     {
+        $table = Result::getTableName();
+
         if ($year == null || $year < Config::get('dopey.firstYear')) {
             $year = Config::get('dopey.lastYear');
         }
@@ -220,9 +256,9 @@ class Result extends Model
         $sql = "
             SELECT minutes, COUNT(*) AS count
             FROM (SELECT runner_id, ROUND(SUM(MINUTE($field) + (HOUR($field)*60))/3) AS minutes, COUNT(*) AS count
-                FROM results 
+                FROM $table 
                 WHERE runner_id IN (SELECT runner_id 
-                    FROM results 
+                    FROM $table 
                     WHERE year <= $year 
                     GROUP BY runner_id 
                     HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 

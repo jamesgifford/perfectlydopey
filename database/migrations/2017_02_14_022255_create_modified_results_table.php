@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResultsTable extends Migration
+class CreateModifiedResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +13,7 @@ class CreateResultsTable extends Migration
      */
     public function up()
     {
-        Schema::create('results', function (Blueprint $table) {
+        Schema::create('modified_results', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('runner_id')->unsigned()->index();
             $table->integer('year')->unsigned();
@@ -21,15 +22,16 @@ class CreateResultsTable extends Migration
             $table->string('last_name', 50);
             $table->integer('age')->unsigned();
             $table->string('gender', 2);
-            $table->time('5k_time', 10);
-            $table->time('10k_time', 10);
-            $table->time('half_time', 10);
-            $table->time('full_time', 10);
+            $table->string('5k_time', 20);
+            $table->string('10k_time', 20);
+            $table->string('half_time', 20);
+            $table->string('full_time', 20);
             $table->string('location', 50);
             $table->string('city', 50);
             $table->string('state', 50);
             $table->string('country', 50);
             $table->timestamps();
+            $table->text('notes')->nullable();
             $table->unique(['year', 'full_name', 'age', '5k_time', 'location']);
         });
     }
@@ -41,6 +43,6 @@ class CreateResultsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('results');
+        Schema::dropIfExists('modified_results');
     }
 }
