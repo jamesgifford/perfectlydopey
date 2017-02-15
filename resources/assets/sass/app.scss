@@ -1,25 +1,10 @@
-body {
-    padding-top: 70px;
-}
 
-.chart {
-    
-}
+// Variables
+@import "variables";
 
-.navbar-default {
-    background: #333;
-    border: none;
-}
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-.navbar-default .navbar-brand {
-    color: #fff;
-}
+// Font Awesome
+@import "node_modules/font-awesome/scss/font-awesome";
 
-.navbar-default .navbar-brand:hover {
-    color: #fff;
-}
-
-.navbar-title {
-    color: #fff;
-    text-align: center;
-}

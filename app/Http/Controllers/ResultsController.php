@@ -16,6 +16,7 @@ class ResultsController extends Controller
 {
     public function index()
     {
+        exit('test');
         $chartData = [];
 
         // Check for cached data

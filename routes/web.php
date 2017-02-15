@@ -1,3 +1,6 @@
 <?php
 
-Route::get('/', 'ResultsController@index');
+
+
+// Homepage
+Route::any('/', 'PagesController@home')->name('home');
