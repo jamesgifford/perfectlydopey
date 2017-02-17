@@ -11,7 +11,7 @@ class PagesController extends Controller
      */
     public function home()
     {
-        return view('pages.layout');
+        return view('pages.home');
     }
 
     /**

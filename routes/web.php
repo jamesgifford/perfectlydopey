@@ -1,6 +1,7 @@
 <?php
 
-
+// Results pages
+Route::get('/results/{category?}/{type?}', 'ResultsController@results')->name('results');
 
 // Homepage
-Route::any('/', 'PagesController@home')->name('home');
+Route::get('/', 'PagesController@home')->name('home');

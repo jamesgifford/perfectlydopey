@@ -6,7 +6,11 @@ elixir((mix) => {
 
     // Mix all vendor scripts together
     mix.scripts(
-        ['jquery/dist/jquery.min.js'],
+        [
+            'jquery/dist/jquery.min.js',
+            'bootstrap-sass/assets/javascripts/bootstrap.min.js',
+            'bootstrap-sass/assets/javascripts/bootstrap/dropdown.js'
+        ],
         'resources/assets/js/vendor.js',
         'node_modules'
     );

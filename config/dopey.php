@@ -3,7 +3,7 @@
 return [
 
     // The most recent year the Dopey Challenge was held
-    'lastYear' => 2016,
+    'lastYear' => 2017,
 
     // The first year the Dopey Challenge was held
     'firstYear' => 2014,
