@@ -42,16 +42,16 @@
                             </ul>
                         </li>
                         <li><label>Category:</label></li>
-                        <li class="dropdown category">
+                        <li id="categories" class="dropdown category">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Total <span class="caret"></span>
+                                <span class="dropdown-current">Totals</span> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#total">Total</a></li>
-                                <li><a href="#gender">Gender</a></li>
-                                <li><a href="#age">Age</a></li>
-                                <li><a href="#pace">Pace</a></li>
-                                <li><a href="#location">Location</a></li>
+                                <li><a class="totals" href="#totals">Totals</a></li>
+                                <li><a class="gender" href="#gender">Gender</a></li>
+                                <li><a class="age" href="#age">Age</a></li>
+                                <li><a class="pace" href="#pace">Pace</a></li>
+                                <li><a class="location" href="#location">Location</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -59,9 +59,9 @@
             </div>
         </nav>
 
-        <h2>Totals</h2>
+        <h2 id="totals">Totals</h2>
 
-        <div id="total" class="container category">
+        <div class="container category">
             <div class="row stat">
                 <div class="title">Current Perfect Dopeys</div>
                 <div class="number">714</div>
@@ -71,11 +71,11 @@
                     {!! $charts['countByYear']->render() !!}
                 </center>
             </div>
-        </div> <!-- /#category-total -->
+        </div> <!-- /#category-totals -->
 
-        <h2>Gender</h2>
+        <h2 id="gender">Gender</h2>
 
-        <div id="gender" class="container category">
+        <div class="container category">
             <div class="row stat">
                 <div class="title">Percentage of Perfect Dopeys Who Are Men</div>
                 <div class="number">59.5%</div>
@@ -91,9 +91,9 @@
             </div>
         </div> <!-- /#category-gender -->
 
-        <h2>Age</h2>
+        <h2 id="age">Age</h2>
 
-        <div id="age" class="container category">
+        <div class="container category">
             <div class="row stat">
                 <div class="title">Average Age</div>
                 <div class="number">44</div>
@@ -105,13 +105,17 @@
             </div>
         </div> <!-- /#category-age -->
 
-        <div id="pace" class="container category">
+        <h2 id="pace">Pace</h2>
+
+        <div class="container category">
             <div class="row">
                 
             </div>
         </div> <!-- /#category-pace -->
 
-        <div id="location" class="container category">
+        <h2 id="location">Location</h2>
+
+        <div class="container category">
             <div class="row">
                 
             </div>
