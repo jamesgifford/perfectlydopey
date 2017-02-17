@@ -179,7 +179,6 @@ this.activeTarget=b,this.clear();var c=this.selector+'[data-target="'+b+'"],'+th
 //# sourceMappingURL=vendor.js.map
 
 $(document).ready(function() {
-    console.log("READY!!!");
 
     $('.dropdown-toggle').dropdown();
 
@@ -204,8 +203,6 @@ $(document).ready(function() {
                     currentElement = $(this).attr('id');
                 }
             });
-
-            //console.log($('#'+currentElement).html());
 
             $('.dropdown-current').html($('#'+currentElement).html());
 

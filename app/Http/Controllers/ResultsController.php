@@ -40,21 +40,24 @@ class ResultsController extends Controller
         /* Gather the data
         ---------------------------------------------------------------------*/
 
-        $viewData = $this->getPerfectData();
+        $modeFunction = 'get'.((int)$mode > 0 ? 'Yearly' : ucfirst($mode)).'Data';
+
+        $viewData = $this->$modeFunction($mode);
 
         // Store the compiled data in the database as a cache
         //$cache = new Cache();
         //$cache->data = serialize($chartData);
         //$cache->save();
 
-        // Make the chart data available to JavaScript
-        //JavaScript::put($viewData['chartData']);
+        //$viewData['mode'] = $mode;
+        $viewData['mode'] = ucfirst($mode);
+        $viewData['type'] = $type;
 
-        return view('results.'.$mode, $viewData);
+        return view('results.'.((int)$mode > 0 ? 'yearly' : $mode), $viewData);
     }
 
     /**
-     * 
+     * Get data for Perfect Dopeys
      */
     private function getPerfectData()
     {
@@ -68,7 +71,7 @@ class ResultsController extends Controller
         ---------------------------------------------------------------------*/
 
         // Count total perfect finishers (same as count for 2017)
-        //$statData['countTotal'] = (int)Result::countTotal('perfect');
+        $stats['countTotal'] = (int)Result::countTotal('perfect');
 
         /* Chart data
         ---------------------------------------------------------------------*/
@@ -87,8 +90,7 @@ class ResultsController extends Controller
             ->elementLabel('Perfect Dopeys')
             ->labels($chartLabels)
             ->values($chartValues)
-            ->colors(['#f00'])
-            ->responsive(false);
+            ->colors(['#f00']);
 
         // Number of Perfect Dopeys by gender
 
@@ -131,75 +133,8 @@ class ResultsController extends Controller
             ->labels($chartLabels)
             ->values($chartValues);
 
-
-
-
-
-
-
-
-            /*
-        // Get data over time (year)
-        for ($i = $dopeyFirstYear; $i <= $dopeyLastYear; $i++) {
-            // Count for year
-            $chartData['countForYear'][] = [(string)$i, (int)Result::countForYear($i, 'perfect')];
-
-            // Count by gender for year
-            $result = Result::countForYearByGender($i, 'perfect');
-            foreach ($result as $row) {
-                $chartData['countForYearByGender'][$i][] = [$row->gender, $row->count];
-            }
-
-            // Count by age for year
-            $result = Result::countForYearByAge($i, 'perfect');
-            $last = 0;
-            foreach ($result as $row) {
-                while ($last && $last + 1 !== (int)$row->age) {
-                    $chartData['countForYearByAge'][$i][] = [(string)++$last, 0];
-                }
-
-                $chartData['countForYearByAge'][$i][] = [(string)$row->age, (int)$row->count];
-                $last = (int)$row->age;
-            }
-        }
-
-        // Count for gender (same as counts for latest year)
-        $result = Result::countByGender('perfect');
-        $chartData['countByGender'][] = ['Gender','Total'];
-        foreach ($result as $row) {
-            $chartData['countByGender'][] = [$row->gender, $row->count];
-        }
-
-        // Count for age (same as counts for latest year)
-        $result = Result::countByAge('perfect');
-        $last = 0;
-        foreach ($result as $row) {
-            while ($last && $last + 1 !== (int)$row->age) {
-                $chartData['countByAge'][] = [(string)++$last, 0];
-            }
-
-            $chartData['countByAge'][] = [(string)$row->age, (int)$row->count];
-            $last = (int)$row->age;
-        }
-
-        // Count for State
-        $result = Result::countByState();
-        $chartData['countByState'][] = ['State','Total'];
-        foreach ($result as $row) {
-            $chartData['countByState'][] = [$row->state, $row->count];
-        }
-
-        // Count for country
-        $result = Result::countByCountry();
-        $chartData['countByCountry'][] = ['Country','Total'];
-        foreach ($result as $row) {
-            $chartData['countByCountry'][] = [$row->country, $row->count];
-        }
-    */
-
         /* List data
         ---------------------------------------------------------------------*/
-
 
         return [
             'stats' => $stats,
@@ -209,30 +144,74 @@ class ResultsController extends Controller
     }
 
     /**
-     * 
+     * Get data for overall Dopey participants
      */
     private function getOverallData()
     {
-        $statData = $chartData = $listData = [];
+        // Get Dopey Challenge config values
+        $dopeyFirstYear = Config::get('dopey.firstYear');
+        $dopeyLastYear = Config::get('dopey.lastYear');
+
+        $stats = $charts = $lists = [];
+
+        /* Stat data
+        ---------------------------------------------------------------------*/
+
+        // Count total distinct Dopey Challenge finishers
+        $stats['countTotal'] = number_format((int)Result::countTotal('overall'));
+
+        /* Chart data
+        ---------------------------------------------------------------------*/
+
+        // Number of distinct finishers by year
+
+        $chartLabels = $chartValues = [];
+
+        for ($i = $dopeyFirstYear; $i <= $dopeyLastYear; $i++) {
+            $chartLabels[] = (string)$i;
+            $chartValues[] = (int)Result::countForYear($i, 'overall');
+        }
+
+        $charts['countByYear'] = Charts::create('bar')
+            ->title('Dopey Challenge Finishers By Year')
+            ->elementLabel('Dopey Challenge Finishers')
+            ->labels($chartLabels)
+            ->values($chartValues)
+            ->colors(['#f00']);
 
         return [
-            'statData' => $statData,
-            'chartData' => $chartData,
-            'listData' => $listData
+            'stats' => $stats,
+            'charts' => $charts,
+            'lists' => $lists
         ];
     }
 
     /**
-     * 
+     * Get data for one year at a time
      */
     private function getYearlyData($year = 2014)
     {
-        $statData = $chartData = $listData = [];
+        // Get Dopey Challenge config values
+        $dopeyFirstYear = Config::get('dopey.firstYear');
+        $dopeyLastYear = Config::get('dopey.lastYear');
+
+        $stats = $charts = $lists = [];
+
+        /* Stat data
+        ---------------------------------------------------------------------*/
+
+        // Count total distinct Dopey Challenge finishers
+        $stats['countTotal'] = number_format((int)Result::countForYear($year));
+
+        /* Chart data
+        ---------------------------------------------------------------------*/
+
+        
 
         return [
-            'statData' => $statData,
-            'chartData' => $chartData,
-            'listData' => $listData
+            'stats' => $stats,
+            'charts' => $charts,
+            'lists' => $lists
         ];
     }
 }

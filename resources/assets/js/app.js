@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    console.log("READY!!!");
 
     $('.dropdown-toggle').dropdown();
 
@@ -24,8 +23,6 @@ $(document).ready(function() {
                     currentElement = $(this).attr('id');
                 }
             });
-
-            //console.log($('#'+currentElement).html());
 
             $('.dropdown-current').html($('#'+currentElement).html());
 

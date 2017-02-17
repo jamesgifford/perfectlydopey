@@ -90,7 +90,7 @@ class Result extends Model
     {
         $table = Result::getTableName();
 
-        if ($mode = 'perfect') {
+        if ($mode == 'perfect') {
             return Result::countForYear(Config::get('dopey.lastYear'), 'perfect');
         }
         else {
