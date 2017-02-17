@@ -90,7 +90,7 @@ class ResultsController extends Controller
             ->elementLabel('Perfect Dopeys')
             ->labels($chartLabels)
             ->values($chartValues)
-            ->colors(['#f00']);
+            ->colors(['#63136E']);
 
         // Number of Perfect Dopeys by gender
 
@@ -105,7 +105,7 @@ class ResultsController extends Controller
         $charts['countByGender'] = Charts::create('bar')
             ->title('Perfect Dopeys By Gender')
             ->elementLabel('Perfect Dopeys')
-            ->colors(['#87ceeb', '#FFC0CB'])
+            ->colors(['#63136E', '#80C125'])
             ->labels($chartLabels)
             ->values($chartValues);
 
@@ -129,7 +129,7 @@ class ResultsController extends Controller
         $charts['countByAge'] = Charts::create('line')
             ->title('Perfect Dopeys by Age')
             ->elementLabel('Perfect Dopeys')
-            ->colors(['#f00'])
+            ->colors(['#63136E'])
             ->labels($chartLabels)
             ->values($chartValues);
 
@@ -177,7 +177,7 @@ class ResultsController extends Controller
             ->elementLabel('Dopey Challenge Finishers')
             ->labels($chartLabels)
             ->values($chartValues)
-            ->colors(['#f00']);
+            ->colors(['#63136E']);
 
         return [
             'stats' => $stats,
