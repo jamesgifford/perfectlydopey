@@ -73,6 +73,19 @@ class ResultsController extends Controller
         // Count total perfect finishers (same as count for 2017)
         $stats['countTotal'] = (int)Result::countTotal('perfect');
 
+        // Get the percentages of men and women finishers
+        $genderResults = Result::countByGender('perfect');
+        $stats['percentMen'] = round((int)$genderResults[0]->count / str_replace(',', '', $stats['countTotal']) * 100, 2);
+        $stats['percentWomen'] = round((int)$genderResults[1]->count / str_replace(',', '', $stats['countTotal']) * 100, 2);
+
+        // Get average age
+        $ageResults = Result::countByAge('perfect');
+        $totalAge = 0;
+        foreach ($ageResults as $result) {
+            $totalAge += ($result->age * $result->count);
+        }
+        $stats['averageAge'] = round($totalAge / str_replace(',', '', $stats['countTotal']), 2);
+
         /* Chart data
         ---------------------------------------------------------------------*/
 
@@ -160,6 +173,19 @@ class ResultsController extends Controller
         // Count total distinct Dopey Challenge finishers
         $stats['countTotal'] = number_format((int)Result::countTotal('overall'));
 
+        // Get the percentages of men and women finishers
+        $genderResults = Result::countByGender('overall');
+        $stats['percentMen'] = round((int)$genderResults[0]->count / str_replace(',', '', $stats['countTotal']) * 100, 2);
+        $stats['percentWomen'] = round((int)$genderResults[1]->count / str_replace(',', '', $stats['countTotal']) * 100, 2);
+
+        // Get average age
+        $ageResults = Result::countByAge('overall');
+        $totalAge = 0;
+        foreach ($ageResults as $result) {
+            $totalAge += ($result->age * $result->count);
+        }
+        $stats['averageAge'] = round($totalAge / str_replace(',', '', $stats['countTotal']), 2);
+
         /* Chart data
         ---------------------------------------------------------------------*/
 
@@ -178,6 +204,47 @@ class ResultsController extends Controller
             ->labels($chartLabels)
             ->values($chartValues)
             ->colors(['#63136E']);
+
+        // Number of distinct finishers by gender
+
+        $chartLabels = $chartValues = [];
+
+        $result = Result::countByGender('overall');
+        foreach ($result as $row) {
+            $chartLabels[] = (string)$row->gender;
+            $chartValues[] = $row->count;
+        }
+
+        $charts['countByGender'] = Charts::create('bar')
+            ->title('Distinct Finishers By Gender')
+            ->elementLabel('Finishers')
+            ->colors(['#63136E', '#80C125'])
+            ->labels($chartLabels)
+            ->values($chartValues);
+
+        // Number of distinct Dopeys by age
+
+        $chartLabels = $chartValues = [];
+
+        $result = Result::countByAge('overall');
+        $last = 0;
+        foreach ($result as $row) {
+            while ($last && $last + 1 !== (int)$row->age) {
+                $chartLabels[] = (string)++$last;
+                $chartValues[] = 0;
+            }
+
+            $chartLabels[] = (string)$row->age;
+            $chartValues[] = (int)$row->count;
+            $last = (int)$row->age;
+        }
+
+        $charts['countByAge'] = Charts::create('line')
+            ->title('Dopeys by Age')
+            ->elementLabel('Dopeys')
+            ->colors(['#63136E'])
+            ->labels($chartLabels)
+            ->values($chartValues);
 
         return [
             'stats' => $stats,
@@ -203,15 +270,68 @@ class ResultsController extends Controller
         // Count total distinct Dopey Challenge finishers
         $stats['countTotal'] = number_format((int)Result::countForYear($year));
 
+        // Get the percentages of men and women finishers
+        $genderResults = Result::countForYearByGender($year);
+        $stats['percentMen'] = round((int)$genderResults[0]->count / str_replace(',', '', $stats['countTotal']) * 100, 2);
+        $stats['percentWomen'] = round((int)$genderResults[1]->count / str_replace(',', '', $stats['countTotal']) * 100, 2);
+
+        // Get average age
+        $ageResults = Result::countForYearByAge($year);
+        $totalAge = 0;
+        foreach ($ageResults as $result) {
+            $totalAge += ($result->age * $result->count);
+        }
+        $stats['averageAge'] = round($totalAge / str_replace(',', '', $stats['countTotal']), 2);
+
         /* Chart data
         ---------------------------------------------------------------------*/
 
-        
+        // Number of yearly finishers by gender
+
+        $chartLabels = $chartValues = [];
+
+        $result = Result::countForYearByGender($year);
+        foreach ($result as $row) {
+            $chartLabels[] = (string)$row->gender;
+            $chartValues[] = $row->count;
+        }
+
+        $charts['countByGender'] = Charts::create('bar')
+            ->title($year.' Dopeys By Gender')
+            ->elementLabel('Dopeys')
+            ->colors(['#63136E', '#80C125'])
+            ->labels($chartLabels)
+            ->values($chartValues);
+
+        // Number of yearly Dopeys by age
+
+        $chartLabels = $chartValues = [];
+
+        $result = Result::countForYearByAge($year);
+        $last = 0;
+        foreach ($result as $row) {
+            while ($last && $last + 1 !== (int)$row->age) {
+                $chartLabels[] = (string)++$last;
+                $chartValues[] = 0;
+            }
+
+            $chartLabels[] = (string)$row->age;
+            $chartValues[] = (int)$row->count;
+            $last = (int)$row->age;
+        }
+
+        $charts['countByAge'] = Charts::create('line')
+            ->title('Dopeys by Age in ' . $year)
+            ->elementLabel('Dopeys')
+            ->colors(['#63136E'])
+            ->labels($chartLabels)
+            ->values($chartValues);
 
         return [
             'stats' => $stats,
             'charts' => $charts,
-            'lists' => $lists
+            'lists' => $lists,
+            'year' => $year
         ];
     }
 }

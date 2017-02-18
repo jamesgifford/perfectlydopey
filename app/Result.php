@@ -235,6 +235,7 @@ class Result extends Model
                     WHERE year <= $year 
                     GROUP BY runner_id 
                     HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) 
+                AND age >= 18 
                 GROUP BY age 
                 ORDER BY age ASC
             ";
@@ -244,6 +245,7 @@ class Result extends Model
                 SELECT age, COUNT(*) AS count
                 FROM $table 
                 WHERE year = $year 
+                AND age >= 18 
                 GROUP BY age 
                 ORDER BY age ASC
             ";
@@ -265,10 +267,13 @@ class Result extends Model
         }
         else {
             $sql = "
-                SELECT age, COUNT(DISTINCT(runner_id)) AS count
-                FROM $table 
-                GROUP BY age 
-                ORDER BY age ASC
+                SELECT t1.age, COUNT(t1.age) AS count 
+                FROM (SELECT or1.runner_id, MAX(or1.age) AS age 
+                    FROM $table or1 
+                    WHERE or1.age >= 18
+                    GROUP BY or1.runner_id) AS t1 
+                GROUP BY t1.age 
+                ORDER BY t1.age ASC
             ";
         }
 

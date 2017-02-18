@@ -6,7 +6,7 @@
 
         <div class="container category">
             <div class="row stat">
-                <div class="title">Total Current Perfect Dopeys</div>
+                <div class="title">Total Perfect Dopeys</div>
                 <div class="number">{!! $stats['countTotal'] !!}</div>
             </div>
             <div class="row chart">
@@ -20,12 +20,12 @@
 
         <div class="container category">
             <div class="row stat">
-                <div class="title">Percentage of Perfect Dopeys Who Are Men</div>
-                <div class="number">59.5%</div>
+                <div class="title">Percentage of Perfectly Dopey Men</div>
+                <div class="number">{!! $stats['percentMen'] !!}%</div>
             </div>
             <div class="row stat">
-                <div class="title">Percentage of Perfect Dopeys Who Are Women</div>
-                <div class="number">40.5%</div>
+                <div class="title">Percentage of Perfectly Dopey Women</div>
+                <div class="number">{!! $stats['percentWomen'] !!}%</div>
             </div>
             <div class="row chart">
                 <center>
@@ -39,7 +39,7 @@
         <div class="container category">
             <div class="row stat">
                 <div class="title">Average Age</div>
-                <div class="number">44</div>
+                <div class="number">{!! $stats['averageAge'] !!}</div>
             </div>
             <div class="row chart">
                 <center>
