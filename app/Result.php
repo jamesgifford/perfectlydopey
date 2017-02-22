@@ -410,26 +410,81 @@ class Result extends Model
         return \DB::select($sql);
     }
 
+    /**
+     * Count the number of finishers the their finishing time for a race (by minutes)
+     */
+    public static function countForYearAndRaceByTime($year, $race = '5k', $mode = 'overall')
+    {
+        $table = Result::getTableName();
 
+        if ($year == null || $year < Config::get('dopey.firstYear')) {
+            $year = Config::get('dopey.lastYear');
+        }
 
+        $race = strtolower($race); // Possibly do more cleaning here
+        if (!in_array($race, ['5k', '10k', 'half', 'full'])) {
+            $race = '5k';
+        }
+        $race .= "_time";
 
+        if ($mode == 'perfect') {
+            $sql = "
+                SELECT or1.minutes, COUNT(or1.minutes) AS count
+                FROM (SELECT runner_id, ROUND(AVG(SECOND($race) + (MINUTE($race) * 60) + (HOUR($race) * 60 * 60)) / 60) AS minutes 
+                    FROM original_results 
+                    WHERE year <= $year 
+                    GROUP BY runner_id 
+                    HAVING COUNT(runner_id) = ($year - (".Config::get('dopey.firstYear')." - 1))) AS or1 
+                GROUP BY or1.minutes 
+                ORDER BY minutes ASC
+            ";
+        }
+        else {
+            $sql = "
+                SELECT or1.minutes, COUNT(or1.minutes) AS count 
+                FROM (SELECT runner_id, ROUND(AVG(SECOND($race) + (MINUTE($race) * 60) + (HOUR($race) * 60 * 60)) / 60) AS minutes 
+                    FROM original_results 
+                    WHERE year = $year 
+                    GROUP BY runner_id) AS or1  
+                GROUP BY or1.minutes 
+                ORDER BY minutes ASC
+            ";
+        }
 
+        $query = \DB::select($sql);
 
+        return $query;
+    }
 
+    /**
+     * Count the number of finishers the their finishing time for a race (by minutes)
+     */
+    public static function countForRaceByTime($race = '5k', $mode = 'overall')
+    {
+        $table = Result::getTableName();
 
+        $race = strtolower($race); // Possibly do more cleaning here
+        if (!in_array($race, ['5k', '10k', 'half', 'full'])) {
+            $race = '5k';
+        }
+        $race .= "_time";
 
+        if ($mode == 'perfect') {
+            return Result::countForYearAndRaceByTime(Config::get('dopey.lastYear'), $race, $mode);
+        }
+        else {
+            $sql = "
+                SELECT or1.minutes, COUNT(or1.minutes) AS count 
+                FROM (SELECT runner_id, ROUND(AVG(SECOND($race) + (MINUTE($race) * 60) + (HOUR($race) * 60 * 60)) / 60) AS minutes 
+                    FROM original_results 
+                    GROUP BY runner_id) AS or1  
+                GROUP BY or1.minutes 
+                ORDER BY minutes ASC
+            ";
+        }
 
-
-
-
-
-
-
-
-
-
-
-
+        return \DB::select($sql);
+    }
 
     /**
      * Get the total number of participants by year
