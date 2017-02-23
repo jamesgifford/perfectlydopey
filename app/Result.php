@@ -425,12 +425,12 @@ class Result extends Model
         if (!in_array($race, ['5k', '10k', 'half', 'full'])) {
             $race = '5k';
         }
-        $race .= "_time";
+        $raceField = $race . "_time";
 
         if ($mode == 'perfect') {
             $sql = "
                 SELECT or1.minutes, COUNT(or1.minutes) AS count
-                FROM (SELECT runner_id, ROUND(AVG(SECOND($race) + (MINUTE($race) * 60) + (HOUR($race) * 60 * 60)) / 60) AS minutes 
+                FROM (SELECT runner_id, ROUND(AVG(SECOND($raceField) + (MINUTE($raceField) * 60) + (HOUR($raceField) * 60 * 60)) / 60) AS minutes 
                     FROM original_results 
                     WHERE year <= $year 
                     GROUP BY runner_id 
@@ -442,7 +442,7 @@ class Result extends Model
         else {
             $sql = "
                 SELECT or1.minutes, COUNT(or1.minutes) AS count 
-                FROM (SELECT runner_id, ROUND(AVG(SECOND($race) + (MINUTE($race) * 60) + (HOUR($race) * 60 * 60)) / 60) AS minutes 
+                FROM (SELECT runner_id, ROUND(AVG(SECOND($raceField) + (MINUTE($raceField) * 60) + (HOUR($raceField) * 60 * 60)) / 60) AS minutes 
                     FROM original_results 
                     WHERE year = $year 
                     GROUP BY runner_id) AS or1  
@@ -467,7 +467,7 @@ class Result extends Model
         if (!in_array($race, ['5k', '10k', 'half', 'full'])) {
             $race = '5k';
         }
-        $race .= "_time";
+        $raceField = $race . "_time";
 
         if ($mode == 'perfect') {
             return Result::countForYearAndRaceByTime(Config::get('dopey.lastYear'), $race, $mode);
@@ -475,7 +475,7 @@ class Result extends Model
         else {
             $sql = "
                 SELECT or1.minutes, COUNT(or1.minutes) AS count 
-                FROM (SELECT runner_id, ROUND(AVG(SECOND($race) + (MINUTE($race) * 60) + (HOUR($race) * 60 * 60)) / 60) AS minutes 
+                FROM (SELECT runner_id, ROUND(AVG(SECOND($raceField) + (MINUTE($raceField) * 60) + (HOUR($raceField) * 60 * 60)) / 60) AS minutes 
                     FROM original_results 
                     GROUP BY runner_id) AS or1  
                 GROUP BY or1.minutes 

@@ -146,6 +146,32 @@ class ResultsController extends Controller
             ->labels($chartLabels)
             ->values($chartValues);
 
+        // Number of Perfect Dopeys by race time (in minutes)
+
+        $chartLabels = $chartValues = [];
+
+        foreach(['5k', '10k', 'half', 'full'] as $race) {
+            $result = Result::countForRaceByTime($race, 'perfect');
+            $last = 0;
+            foreach ($result as $row) {
+                while ($last && $last + 1 !== (int)$row->minutes) {
+                    $chartLabels[$race][] = (string)++$last;
+                    $chartValues[$race][] = 0;
+                }
+
+                $chartLabels[$race][] = (string)$row->minutes;
+                $chartValues[$race][] = (int)$row->count;
+                $last = (int)$row->minutes;
+            }
+
+            $charts['countByTime-'.$race] = Charts::create('area')
+                ->title('Perfect Dopeys by Time For '.ucfirst($race))
+                ->elementLabel('Perfect Dopeys')
+                ->colors(['#63136E'])
+                ->labels($chartLabels[$race])
+                ->values($chartValues[$race]);
+        }
+
         /* List data
         ---------------------------------------------------------------------*/
 

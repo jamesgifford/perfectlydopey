@@ -48,12 +48,30 @@
             </div>
         </div> <!-- /#category-age -->
 
-        <h2 id="pace">Pace</h2>
+        <h2 id="time">Time</h2>
 
         <div class="container category">
             <div class="row chart">
+                <center>
+                    {!! $charts['countByTime-5k']->render() !!}
+                </center>
             </div>
-        </div> <!-- /#category-pace -->
+            <div class="row chart">
+                <center>
+                    {!! $charts['countByTime-10k']->render() !!}
+                </center>
+            </div>
+            <div class="row chart">
+                <center>
+                    {!! $charts['countByTime-half']->render() !!}
+                </center>
+            </div>
+            <div class="row chart">
+                <center>
+                    {!! $charts['countByTime-full']->render() !!}
+                </center>
+            </div>
+        </div> <!-- /#category-time -->
 
         <h2 id="location">Location</h2>
 

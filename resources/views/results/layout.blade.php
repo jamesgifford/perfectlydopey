@@ -50,7 +50,7 @@
                                 <li><a class="totals" href="#totals">Totals</a></li>
                                 <li><a class="gender" href="#gender">Gender</a></li>
                                 <li><a class="age" href="#age">Age</a></li>
-                                <li><a class="pace" href="#pace">Pace</a></li>
+                                <li><a class="time" href="#time">Time</a></li>
                                 <li><a class="location" href="#location">Location</a></li>
                             </ul>
                         </li>
