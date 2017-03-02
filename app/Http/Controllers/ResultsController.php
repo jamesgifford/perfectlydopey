@@ -103,7 +103,9 @@ class ResultsController extends Controller
             ->elementLabel('Perfect Dopeys')
             ->labels($chartLabels)
             ->values($chartValues)
-            ->colors(['#63136E']);
+            ->colors(['#63136E'])
+            ->y_axis_title('Number of Perfect Dopeys')
+            ->x_axis_title('Year');
 
         // Number of Perfect Dopeys by gender
 
@@ -120,7 +122,9 @@ class ResultsController extends Controller
             ->elementLabel('Perfect Dopeys')
             ->colors(['#63136E', '#80C125'])
             ->labels($chartLabels)
-            ->values($chartValues);
+            ->values($chartValues)
+            ->y_axis_title('Number of Perfect Dopeys')
+            ->x_axis_title('Gender');
 
         // Number of Perfect Dopeys by age
 
@@ -144,7 +148,9 @@ class ResultsController extends Controller
             ->elementLabel('Perfect Dopeys')
             ->colors(['#63136E'])
             ->labels($chartLabels)
-            ->values($chartValues);
+            ->values($chartValues)
+            ->y_axis_title('Number of Perfect Dopeys')
+            ->x_axis_title('Age');
 
         // Number of Perfect Dopeys by race time (in minutes)
 
@@ -169,7 +175,9 @@ class ResultsController extends Controller
                 ->elementLabel('Perfect Dopeys')
                 ->colors(['#63136E'])
                 ->labels($chartLabels[$race])
-                ->values($chartValues[$race]);
+                ->values($chartValues[$race])
+                ->y_axis_title('Number of Perfect Dopeys')
+                ->x_axis_title('Average Finish Time in Minutes');
         }
 
         /* List data
