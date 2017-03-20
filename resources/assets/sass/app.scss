@@ -17,6 +17,11 @@
     font-style: normal; }
 
 
+body {
+    background-repeat: repeat;
+}
+
+
 h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
 }
@@ -55,6 +60,16 @@ footer {
 
 #page-home #categories p:nth-child(2) {
     text-align: left;
+}
+
+#page-home .medal {
+    height: 160px;
+    position: relative;
+}
+
+#page-home .medal img {
+    bottom: 0;
+    position: relative;
 }
 
 

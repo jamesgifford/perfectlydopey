@@ -1383,7 +1383,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #333333;
+  color: #131313;
   background-color: #fff;
 }
 
@@ -3491,7 +3491,7 @@ select[multiple].input-lg,
   display: block;
   margin-top: 5px;
   margin-bottom: 10px;
-  color: #737373;
+  color: #535353;
 }
 
 @media (min-width: 768px) {
@@ -5737,7 +5737,7 @@ a.badge:hover, a.badge:focus {
 
 .thumbnail .caption {
   padding: 9px;
-  color: #333333;
+  color: #131313;
 }
 
 a.thumbnail:hover,
@@ -10743,6 +10743,10 @@ button.close {
   font-style: normal;
 }
 
+body {
+  background-repeat: repeat;
+}
+
 h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
@@ -10777,6 +10781,16 @@ footer {
 
 #page-home #categories p:nth-child(2) {
   text-align: left;
+}
+
+#page-home .medal {
+  height: 160px;
+  position: relative;
+}
+
+#page-home .medal img {
+  bottom: 0;
+  position: relative;
 }
 
 /* results pages

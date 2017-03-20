@@ -26,16 +26,19 @@
         <div id="categories" class="container">
             <div class="row">
                 <div class="col-md-4">
+                    <div class="medal"><img src="/images/overall_icon.png" alt="Overall Results" width="90"></div>
                     <h3>Overall</h3>
                     <p>Tens of thousands of distinct individuals have completed a Dopey Challenge over the years, running 48.6 miles over four days to earn their medals.</p>
                     <p><a class="btn btn-default" href="/results/overall" role="button">View Overall Results</a></p>
                 </div>
                 <div class="col-md-4">
+                    <div class="medal"><img src="/images/perfect_icon.png" alt="Overall Results" width="90"></div>
                     <h3>Perfect</h3>
                     <p>The list of Perfect Dopeys gets smaller every year, but there are still many runners who continue to make the challenge an annual achievement.</p>
                     <p><a class="btn btn-default" href="/results/perfect" role="button">View Perfect Results</a></p>
                 </div>
                 <div class="col-md-4">
+                    <div class="medal"><img src="/images/yearly_icon.png" alt="Overall Results" width="90"></div>
                     <h3>Yearly</h3>
                     <p>The Dopey Challenge has been held annually for the past four years and with each event comes a different mix of runners with different backgrounds and abilities.</p>
                     <p>
