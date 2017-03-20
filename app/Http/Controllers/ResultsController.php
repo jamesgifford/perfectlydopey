@@ -180,6 +180,23 @@ class ResultsController extends Controller
                 ->x_axis_title('Average Finish Time in Minutes');
         }
 
+        // Number of Perfect Dopeys by country
+
+        $chartLabels = $chartValues = [];
+
+        $result = Result::countByCountry('perfect');
+        foreach ($result as $row) {
+            $chartLabels[] = (string)$row->country;
+            $chartValues[] = $row->count;
+        }
+
+        $charts['countByCountry'] = Charts::create('geo')
+            ->title('Perfect Dopeys By Country')
+            ->elementLabel('Perfect Dopeys')
+            ->colors(['#7E5C8F', '#63136E'])
+            ->labels($chartLabels)
+            ->values($chartValues);
+
         /* List data
         ---------------------------------------------------------------------*/
 
@@ -280,6 +297,51 @@ class ResultsController extends Controller
             ->labels($chartLabels)
             ->values($chartValues);
 
+        // Number of Finishers by race time (in minutes)
+
+        $chartLabels = $chartValues = [];
+
+        foreach(['5k', '10k', 'half', 'full'] as $race) {
+            $result = Result::countForRaceByTime($race, 'overall');
+            $last = 0;
+            foreach ($result as $row) {
+                while ($last && $last + 1 !== (int)$row->minutes) {
+                    $chartLabels[$race][] = (string)++$last;
+                    $chartValues[$race][] = 0;
+                }
+
+                $chartLabels[$race][] = (string)$row->minutes;
+                $chartValues[$race][] = (int)$row->count;
+                $last = (int)$row->minutes;
+            }
+
+            $charts['countByTime-'.$race] = Charts::create('area')
+                ->title('Finishers by Time For '.ucfirst($race))
+                ->elementLabel('Finishers')
+                ->colors(['#63136E'])
+                ->labels($chartLabels[$race])
+                ->values($chartValues[$race])
+                ->y_axis_title('Number of Finishers')
+                ->x_axis_title('Average Finish Time in Minutes');
+        }
+
+        // Number of finishers by country
+
+        $chartLabels = $chartValues = [];
+
+        $result = Result::countByCountry('overall');
+        foreach ($result as $row) {
+            $chartLabels[] = (string)$row->country;
+            $chartValues[] = $row->count;
+        }
+
+        $charts['countByCountry'] = Charts::create('geo')
+            ->title('Finishers By Country')
+            ->elementLabel('Finishers')
+            ->colors(['#7E5C8F', '#63136E'])
+            ->labels($chartLabels)
+            ->values($chartValues);
+
         return [
             'stats' => $stats,
             'charts' => $charts,
@@ -358,6 +420,51 @@ class ResultsController extends Controller
             ->title('Dopeys by Age in ' . $year)
             ->elementLabel('Dopeys')
             ->colors(['#63136E'])
+            ->labels($chartLabels)
+            ->values($chartValues);
+
+        // Number of Finishers by race time (in minutes)
+
+        $chartLabels = $chartValues = [];
+
+        foreach(['5k', '10k', 'half', 'full'] as $race) {
+            $result = Result::countForYearAndRaceByTime($year, $race);
+            $last = 0;
+            foreach ($result as $row) {
+                while ($last && $last + 1 !== (int)$row->minutes) {
+                    $chartLabels[$race][] = (string)++$last;
+                    $chartValues[$race][] = 0;
+                }
+
+                $chartLabels[$race][] = (string)$row->minutes;
+                $chartValues[$race][] = (int)$row->count;
+                $last = (int)$row->minutes;
+            }
+
+            $charts['countByTime-'.$race] = Charts::create('area')
+                ->title('Finishers by Time For '.ucfirst($race))
+                ->elementLabel('Finishers')
+                ->colors(['#63136E'])
+                ->labels($chartLabels[$race])
+                ->values($chartValues[$race])
+                ->y_axis_title('Number of Finishers')
+                ->x_axis_title('Average Finish Time in Minutes');
+        }
+
+        // Number of finishers by country
+
+        $chartLabels = $chartValues = [];
+
+        $result = Result::countForYearByCountry($year, 'overall');
+        foreach ($result as $row) {
+            $chartLabels[] = (string)$row->country;
+            $chartValues[] = $row->count;
+        }
+
+        $charts['countByCountry'] = Charts::create('geo')
+            ->title('Finishers By Country')
+            ->elementLabel('Finishers')
+            ->colors(['#7E5C8F', '#63136E'])
             ->labels($chartLabels)
             ->values($chartValues);
 

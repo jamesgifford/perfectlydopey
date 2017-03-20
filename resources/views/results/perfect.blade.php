@@ -76,8 +76,13 @@
         <h2 id="location">Location</h2>
 
         <div class="container category">
-            <div class="row chart">
+            <div class="row stat">
             </div>
-        </div> <!-- /#category-location -->
+            <div class="row chart">
+                <center>
+                    {!! $charts['countByCountry']->render() !!}
+                </center>
+            </div>
+        </div> <!-- /#category-age -->
 
 @endsection
