@@ -23,7 +23,7 @@
             </div>
         </div><!-- /.jumbotron -->
 
-        <div id="categories" class="container">
+        <div id="home-categories" class="container">
             <div class="row">
                 <div class="col-md-4">
                     <div class="medal"><img src="/images/overall_icon.png" alt="Overall Results" width="90"></div>
@@ -60,7 +60,7 @@
 
         <footer>
             <div class="container">
-                <p>&copy; 2017 James Gifford</p>
+                <p>&copy; 2019 James Gifford</p>
             <div class="container">
         </footer>
 
